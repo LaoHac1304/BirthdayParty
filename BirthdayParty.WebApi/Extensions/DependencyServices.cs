@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -14,7 +13,7 @@ public static class DependencyServices
 {
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork<PartyDbContext>, UnitOfWork<PartyDbContext>>();
+        services.AddScoped<IUnitOfWork<PartydbContext>, UnitOfWork<PartydbContext>>();
         return services;
     }
 

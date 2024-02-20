@@ -8,15 +8,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BirthdayParty.Domain.DbContexts;
 
 namespace BirthdayParty.Infrastructure.Repository.Common
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly DbContext _dbContext;
+        protected readonly PartydbContext _dbContext = new PartydbContext();
         protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(PartydbContext context)
         {
             _dbContext = context;
             _dbSet = context.Set<T>();
