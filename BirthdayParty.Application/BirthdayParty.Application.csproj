@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BirthdayParty.Domain\BirthdayParty.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Service\Common\" />
+  </ItemGroup>
+
 </Project>
