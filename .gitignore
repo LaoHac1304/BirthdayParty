@@ -402,4 +402,14 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio
+# End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode
+.idea
+BirthdayParty.Application
+BirthdayParty.Domain
+BirthdayParty.Infrastructure
+BirthdayParty.Services
+BirthdayParty.Application/obj
+BirthdayParty.Domain/obj
+BirthdayParty.Infrastructure/obj
+BirthdayParty.Services/obj
+BirthdayParty.WebApi/obj
