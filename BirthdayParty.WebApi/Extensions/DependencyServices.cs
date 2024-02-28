@@ -5,20 +5,33 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Pos_System.API.Extensions;
 
 using BirthdayParty.Application.Repository.Common;
+using BirthdayParty.Application.Service;
+using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.DbContexts;
 using BirthdayParty.Infrastructure.Repository.Common;
+using BirthdayParty.Services.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static class DependencyServices
 {
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork<PartydbContext>, UnitOfWork<PartydbContext>>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration config)
     {
+        services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        return services;
+    }
+
+    public static IServiceCollection AddAccessor(this IServiceCollection services)
+    {
+        services.AddHttpContextAccessor();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         return services;
     }
 

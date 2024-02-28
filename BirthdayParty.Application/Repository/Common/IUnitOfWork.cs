@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BirthdayParty.Domain.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,18 @@ using System.Threading.Tasks;
 
 namespace BirthdayParty.Application.Repository.Common
 {
-    public interface IUnitOfWork : IGenericRepositoryFactory, IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         int Commit();
 
         Task<int> CommitAsync();
 
-    }
+        IGenericRepository<TEntity> GetRepository<TEntity>()
+           where TEntity : class;
 
-    public interface IUnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
-    {
-        TContext Context { get; }
+        /*TEntityRepository? Resolve<TEntity, TEntityRepository>()
+            where TEntity : class
+            where TEntityRepository : IGenericRepository<TEntity>;*/
+
     }
 }

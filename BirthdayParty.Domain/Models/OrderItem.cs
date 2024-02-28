@@ -5,7 +5,7 @@ namespace BirthdayParty.Domain.Models;
 
 public partial class OrderItem
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; }
 
     public long? Price { get; set; }
 

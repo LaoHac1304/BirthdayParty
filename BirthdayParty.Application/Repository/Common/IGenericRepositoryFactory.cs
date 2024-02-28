@@ -8,6 +8,5 @@ namespace BirthdayParty.Application.Repository.Common
 {
     public interface IGenericRepositoryFactory
     {
-        IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
     }
 }

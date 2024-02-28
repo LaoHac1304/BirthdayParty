@@ -5,7 +5,7 @@ namespace BirthdayParty.Domain.Models;
 
 public partial class Post
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; }
 
     public string? Content { get; set; }
 
