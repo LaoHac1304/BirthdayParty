@@ -14,18 +14,18 @@ namespace BirthdayParty.Infrastructure.Repository.Common
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly PartydbContext _dbContext = new PartydbContext();
+        protected readonly DbContext Context;
         protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(PartydbContext context)
+        public GenericRepository(DbContext context)
         {
-            _dbContext = context;
+            Context = context;
             _dbSet = context.Set<T>();
         }
 
         public void Dispose()
         {
-            _dbContext?.Dispose();
+            Context?.Dispose();
         }
 
         #region Gett Async

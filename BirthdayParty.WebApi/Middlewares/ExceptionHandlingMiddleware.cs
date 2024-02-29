@@ -27,7 +27,7 @@ namespace BirthdayParty.WebApi.Middlewares
         }
 
         public async Task InvokeAsync(HttpContext context)
-        {
+        {// uuid khac string thi phai cai ong add no dai hon 1 ki tu 
             try
             {
                 await _next(context);

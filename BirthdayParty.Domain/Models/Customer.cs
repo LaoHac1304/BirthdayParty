@@ -5,9 +5,14 @@ namespace BirthdayParty.Domain.Models;
 
 public partial class Customer
 {
-    public string Id { get; set; } = null!;
+    public string? Id { get; set; }
 
     public string? UserId { get; set; }
+    public string? PhoneNumber { get; set; }
+
+    public string? FullName { get; set; }
+
+    public string? ImageUrl { get; set; }
 
     public DateTime? DayOfBirth { get; set; }
 

@@ -39,9 +39,10 @@ public partial class PartydbContext : DbContext
     public virtual DbSet<Post> Posts { get; set; }
 
     public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySQL("server=database-1.c7cae8e8mcxf.ap-southeast-2.rds.amazonaws.com;uid=admin;pwd=7LwPyzbw4KfMBu6;database=partydb");
+    {
+        optionsBuilder.UseMySQL("server=database-1.c7cae8e8mcxf.ap-southeast-2.rds.amazonaws.com;uid=admin;pwd=7LwPyzbw4KfMBu6;database=partydb");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,21 +61,14 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnName("email");
-            entity.Property(e => e.FullName)
-                .HasMaxLength(255)
-                .HasColumnName("full_name");
-            entity.Property(e => e.ImageUrl)
-                .HasMaxLength(255)
-                .HasColumnName("image_url");
+
             entity.Property(e => e.IsDeleted)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("is_deleted");
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
                 .HasColumnName("password");
-            entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(255)
-                .HasColumnName("phone_number");
+
             entity.Property(e => e.Role)
                 .HasMaxLength(255)
                 .HasColumnName("role");
@@ -97,6 +91,15 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(64)
                 .HasColumnName("id");
+            entity.Property(e => e.FullName)
+                .HasMaxLength(255)
+                .HasColumnName("full_name");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .HasColumnName("image_url");
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(255)
+                .HasColumnName("phone_number");
             entity.Property(e => e.CreatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("created_at");

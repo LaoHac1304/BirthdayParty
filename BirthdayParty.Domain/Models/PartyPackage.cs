@@ -5,7 +5,7 @@ namespace BirthdayParty.Domain.Models;
 
 public partial class PartyPackage
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; }
 
     public string? Name { get; set; }
 
