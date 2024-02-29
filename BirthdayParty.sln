@@ -11,7 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Domain", "BirthdayParty.Domain\BirthdayParty.Domain.csproj", "{778B4F3C-AD66-4BD7-9331-58DBF88FCC10}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Services", "BirthdayParty.Services\BirthdayParty.Services.csproj", "{286C56A1-C0D0-4CFF-8FB5-3FCF56A7F8CB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A95BAB36-B734-4105-B8A1-6B63904A12AC}"
+	ProjectSection(SolutionItems) = preProject
+		BirthdayParty.Services\BirthdayParty.Services.csproj = BirthdayParty.Services\BirthdayParty.Services.csproj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
