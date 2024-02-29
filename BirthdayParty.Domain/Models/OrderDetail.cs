@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BirthdayParty.Domain.Validation.OrderDetailValidation;
+using System;
 using System.Collections.Generic;
 
 namespace BirthdayParty.Domain.Models;
@@ -9,6 +10,7 @@ public partial class OrderDetail
 
     public long? TotalPrice { get; set; }
 
+    [OrderDetailDate("Date must be after today.")]
     public DateTime? Date { get; set; }
 
     public string? CustomerId { get; set; }
