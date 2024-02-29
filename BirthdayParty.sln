@@ -11,10 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Domain", "BirthdayParty.Domain\BirthdayParty.Domain.csproj", "{778B4F3C-AD66-4BD7-9331-58DBF88FCC10}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A95BAB36-B734-4105-B8A1-6B63904A12AC}"
-	ProjectSection(SolutionItems) = preProject
-		BirthdayParty.Services\BirthdayParty.Services.csproj = BirthdayParty.Services\BirthdayParty.Services.csproj
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthdayParty.Services", "BirthdayParty.Services\BirthdayParty.Services.csproj", "{C25320D6-5455-4708-906E-37D4874AB66F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +35,10 @@ Global
 		{778B4F3C-AD66-4BD7-9331-58DBF88FCC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{778B4F3C-AD66-4BD7-9331-58DBF88FCC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{778B4F3C-AD66-4BD7-9331-58DBF88FCC10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{286C56A1-C0D0-4CFF-8FB5-3FCF56A7F8CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{286C56A1-C0D0-4CFF-8FB5-3FCF56A7F8CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{286C56A1-C0D0-4CFF-8FB5-3FCF56A7F8CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{286C56A1-C0D0-4CFF-8FB5-3FCF56A7F8CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C25320D6-5455-4708-906E-37D4874AB66F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C25320D6-5455-4708-906E-37D4874AB66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C25320D6-5455-4708-906E-37D4874AB66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C25320D6-5455-4708-906E-37D4874AB66F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
