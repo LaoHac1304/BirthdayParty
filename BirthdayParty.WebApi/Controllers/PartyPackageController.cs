@@ -28,7 +28,7 @@ public class PartyPackageController : BaseController<PartyPackageController>
 
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<ActionResult<PartyPackage>> Put(Guid id)
+    public Task<ActionResult<PartyPackage>> Put(string id)
     {
         throw new NotImplementedException();
     }
@@ -36,7 +36,19 @@ public class PartyPackageController : BaseController<PartyPackageController>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<ActionResult<PartyPackage>> Delete(Guid id)
+    public Task<ActionResult<PartyPackage>> Delete(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost("{partyPackageId}/posts")]
+    public Task<ActionResult<Post>> CreatePost(string partyPackageId)
+    {
+        throw new NotImplementedException();
+    }
+    
+    [HttpGet("{partyPackageId}/posts")]
+    public Task<ActionResult<IEnumerable<Post>>> GetPosts(string partyPackageId)
     {
         throw new NotImplementedException();
     }
