@@ -21,5 +21,11 @@
             public const string AccountsEndpoint = ApiEndpoint + "/accounts";
             public const string AccountEndpoint = ApiEndpoint + "/{id}";
         }
+
+        public static class HostParty
+        {
+            public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
+            public const string HostPartyEndpoint = ApiEndpoint + "/{id}";
+        }
     }
 }

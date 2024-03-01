@@ -156,6 +156,9 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(64)
                 .HasColumnName("id");
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(255)
+                .HasColumnName("phone_number");
             entity.Property(e => e.CreatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("created_at");
