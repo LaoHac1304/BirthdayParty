@@ -19,7 +19,13 @@
         public static class Account
         {
             public const string AccountsEndpoint = ApiEndpoint + "/accounts";
-            public const string AccountEndpoint = ApiEndpoint + "/{id}";
+            public const string AccountEndpoint = AccountsEndpoint + "/{id}";
+        }
+
+        public static class OrderDetail
+        {
+            public const string OrderDetailsEndpoint = ApiEndpoint + "/orderdetails";
+            public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
         }
 
         public static class HostParty
