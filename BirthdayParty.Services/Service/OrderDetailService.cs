@@ -55,7 +55,7 @@ namespace BirthdayParty.Services.Service
             order.UpdatedAt = DateTime.UtcNow;
 
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
-            return isSuccessful;
+            return isSuccessful;    
         }
 
         public async Task<GetOrderDetailResponse> CreateOrderDetail(CreateOrderDetailRequest createOrderDetailRequest)

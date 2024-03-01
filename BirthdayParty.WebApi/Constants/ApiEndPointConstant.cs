@@ -27,5 +27,11 @@
             public const string OrderDetailsEndpoint = ApiEndpoint + "/orderdetails";
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
         }
+
+        public static class OrderItem
+        {
+            public const string OrderItemsEndpoint = ApiEndpoint + "/orderitems";
+            public const string OrderItemEndpoint = OrderItemsEndpoint + "/{id}";
+        }
     }
 }
