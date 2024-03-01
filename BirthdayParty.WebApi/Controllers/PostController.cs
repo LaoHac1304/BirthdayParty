@@ -34,4 +34,10 @@ public class PostController : BaseController<PostController>
     {
         throw new NotImplementedException();
     }
+
+    [HttpGet]
+    public Task<ActionResult<IEnumerable<Post>>> Get()
+    {
+        throw new NotImplementedException();
+    }
 }

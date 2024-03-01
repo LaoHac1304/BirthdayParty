@@ -53,5 +53,16 @@ public class PartyPackageController : BaseController<PartyPackageController>
         throw new NotImplementedException();
     }
     
+    [HttpPost("{partyPackageId}/menus")]
+    public Task<ActionResult<Menu>> CreateMenu(string partyPackageId)
+    {
+        throw new NotImplementedException();
+    }
+    
+    [HttpGet("{partyPackageId}/menus")]
+    public Task<ActionResult<Menu>> GetMenus(string partyPackageId)
+    {
+        throw new NotImplementedException();
+    } 
     
 }
