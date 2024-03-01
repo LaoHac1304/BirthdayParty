@@ -33,5 +33,10 @@
             public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
             public const string HostPartyEndpoint = ApiEndpoint + "/{id}";
         }
+        public static class PaymentDetail
+        {
+            public const string PaymentDetailsEndpoint = ApiEndpoint + "/paymentdetails";
+            public const string PaymentDetailEndpoint = PaymentDetailsEndpoint + "/{id}";
+        }
     }
 }
