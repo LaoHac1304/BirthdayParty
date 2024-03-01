@@ -55,6 +55,7 @@ namespace BirthdayParty.Services.Service
             }   
             else
             {
+                if (existAccount.IsDeleted == true) return null;
                 jwtToken = JwtUtil.GenerateJwtToken(existAccount, guidClaim);
             }
 
@@ -67,7 +68,7 @@ namespace BirthdayParty.Services.Service
             };
         }
 
-        private async Task<Account> CreateAccount(string email, string role)
+        public async Task<Account> CreateAccount(string email, string role)
         {
             Account account = new Account()
             {

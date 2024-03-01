@@ -27,5 +27,11 @@
             public const string OrderDetailsEndpoint = ApiEndpoint + "/orderdetails";
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
         }
+
+        public static class HostParty
+        {
+            public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
+            public const string HostPartyEndpoint = ApiEndpoint + "/{id}";
+        }
     }
 }
