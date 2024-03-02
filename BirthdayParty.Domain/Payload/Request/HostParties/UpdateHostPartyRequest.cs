@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BirthdayParty.Domain.Payload.Request.HostParties
 {
-    public class CreateHostPartyRequest
+    public class UpdateHostPartyRequest
     {
-        public string? UserId { get; set; }
-        public string? Description { get; set;}
+        public string? Description { get; set; }
         public string? Email { get; set; }
+        public string? Rating {get; set; }
         public string? PhoneNumber { get; set;}
-        public string? Rating { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

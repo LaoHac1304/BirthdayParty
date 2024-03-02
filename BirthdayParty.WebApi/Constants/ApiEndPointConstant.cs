@@ -31,7 +31,7 @@
         public static class HostParty
         {
             public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
-            public const string HostPartyEndpoint = ApiEndpoint + "/{id}";
+            public const string HostPartyEndpoint = HostPartiesEndpoint + "/{id}";
         }
     }
 }
