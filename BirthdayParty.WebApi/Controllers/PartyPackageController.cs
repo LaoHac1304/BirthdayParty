@@ -1,4 +1,6 @@
-﻿using BirthdayParty.Domain.Models;
+﻿using BirthdayParty.Application.Service.Common;
+using BirthdayParty.Domain.Models;
+using BirthdayParty.Domain.Payload.Request.Posts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirthdayParty.WebApi.Controllers;
@@ -8,6 +10,7 @@ namespace BirthdayParty.WebApi.Controllers;
 [Route("api/v1/party-packages")]
 public class PartyPackageController : BaseController<PartyPackageController>
 {
+    private readonly IPartyPackageService _partyPackageService;
     public PartyPackageController(ILogger<PartyPackageController> logger) : base(logger)
     {
     }
@@ -42,9 +45,10 @@ public class PartyPackageController : BaseController<PartyPackageController>
     }
 
     [HttpPost("{partyPackageId}/posts")]
-    public Task<ActionResult<Post>> CreatePost(string partyPackageId)
+    public async Task<ActionResult<Post>> CreatePost(string partyPackageId, CreatePostRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _partyPackageService.CreatePost(partyPackageId, request);
+        return Ok(result);
     }
     
     [HttpGet("{partyPackageId}/posts")]
