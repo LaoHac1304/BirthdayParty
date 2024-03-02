@@ -43,11 +43,11 @@ try
          options.TokenValidationParameters = new TokenValidationParameters
          {
              ValidateIssuer = true,
-             ValidateAudience = true,
-             ValidateLifetime = true,
-             ValidateIssuerSigningKey = true,
+             ValidateAudience = false,
+/*             ValidateLifetime = true,
+*/             ValidateIssuerSigningKey = true,
              ValidIssuer = jwtIssuer,
-             ValidAudience = jwtIssuer,
+             //ValidAudience = jwtIssuer,
              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
          };
      });
