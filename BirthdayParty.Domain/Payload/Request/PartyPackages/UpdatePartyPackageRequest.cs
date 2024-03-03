@@ -1,6 +1,6 @@
 ﻿namespace BirthdayParty.Domain.Payload.Request.PartyPackages;
 
-public class CreatePartyPackageRequest
+public class UpdatePartyPackageRequest
 {
     public string? Name { get; set; }
 
@@ -14,10 +14,9 @@ public class CreatePartyPackageRequest
 
     public string? HostPartyId { get; set; }
 
-    public int? Price { get; set; } = 0;
+    public int? Price { get; set; }
 
     public string? DiscountId { get; set; }
 
-    public bool? AvailableForPreorder { get; set; } = false;
-    public string? Status { get; set; } = "Inactive";
+    public bool? AvailableForPreorder { get; set; }
 }
