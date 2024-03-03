@@ -27,6 +27,7 @@ public static class DependencyServices
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IOrderDetailsService, OrderDetailService>();
         services.AddScoped<IPartyPackageService, PartyPackageService>();
+        services.AddScoped<IPostService, PostService>();
         return services;
     }
 
