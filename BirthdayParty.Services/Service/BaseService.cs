@@ -57,5 +57,7 @@ namespace BirthdayParty.Services.Service
         {
             return _httpContextAccessor?.HttpContext?.User?.FindFirstValue("storeId");
         }
+
+       
     }
 }

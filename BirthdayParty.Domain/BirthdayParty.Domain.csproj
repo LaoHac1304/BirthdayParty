@@ -22,4 +22,9 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Payload\Request\Discounts\" />
+    <Folder Include="Payload\Request\Menus\" />
+  </ItemGroup>
+
 </Project>
