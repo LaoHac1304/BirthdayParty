@@ -27,7 +27,7 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost(ApiEndPointConstant.Discount.DiscountsEndpoint)]
         public async Task<IActionResult> Post([FromBody] CreateDiscountRequest createDiscountRequest)
         {
             var discount = await discountService.CreateDiscount(createDiscountRequest);

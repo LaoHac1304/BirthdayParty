@@ -26,7 +26,7 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost(ApiEndPointConstant.Menu.MenusEndpoint)]
         public async Task<IActionResult> Post([FromBody] CreateMenuRequest createMenuRequest)
         {
             var menu = await menuService.CreateMenu(createMenuRequest);
