@@ -69,30 +69,30 @@ public class PartyPackageController : BaseController<PartyPackageController>
         return Ok(result);
     }
 
-    [HttpPost("{partyPackageId}/posts")]
-    public async Task<ActionResult<string>> CreatePost([FromRoute] string partyPackageId, CreatePostRequest request)
-    {
-        var result = await _partyPackageService.CreatePost(partyPackageId, request);
-        return Ok(result);
-    }
-
-    [HttpGet("{partyPackageId}/posts")]
-    public async Task<ActionResult<IPaginate<GetPostsResponse>>> GetPosts([FromRoute] string partyPackageId,
-        [FromQuery] GetPostsRequest request)
-    {
-        var result = await _partyPackageService.GetPosts(partyPackageId, request);
-        return Ok(result);
-    }
-
-    [HttpPost("{partyPackageId}/menus")]
-    public Task<ActionResult<Menu>> CreateMenu(string partyPackageId)
-    {
-        throw new NotImplementedException();
-    }
-
-    [HttpGet("{partyPackageId}/menus")]
-    public Task<ActionResult<Menu>> GetMenus(string partyPackageId)
-    {
-        throw new NotImplementedException();
-    }
+    // [HttpPost("{partyPackageId}/posts")]
+    // public async Task<ActionResult<string>> CreatePost([FromRoute] string partyPackageId, CreatePostRequest request)
+    // {
+    //     var result = await _partyPackageService.CreatePost(partyPackageId, request);
+    //     return Ok(result);
+    // }
+    //
+    // [HttpGet("{partyPackageId}/posts")]
+    // public async Task<ActionResult<IPaginate<GetPostsResponse>>> GetPosts([FromRoute] string partyPackageId,
+    //     [FromQuery] GetPostsRequest request)
+    // {
+    //     var result = await _partyPackageService.GetPosts(partyPackageId, request);
+    //     return Ok(result);
+    // }
+    //
+    // [HttpPost("{partyPackageId}/menus")]
+    // public Task<ActionResult<Menu>> CreateMenu(string partyPackageId)
+    // {
+    //     throw new NotImplementedException();
+    // }
+    //
+    // [HttpGet("{partyPackageId}/menus")]
+    // public Task<ActionResult<Menu>> GetMenus(string partyPackageId)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

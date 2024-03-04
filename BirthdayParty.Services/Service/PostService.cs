@@ -121,4 +121,31 @@ public class PostService : BaseService<PostService>, IPostService
             return e.Message;
         }
     }
+
+    public async Task<string> CreatePost(CreatePostRequest request)
+    {
+        try
+        {
+            var toBeAdded = new Post()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IsDeleted = false,
+                Content = request.Content,
+                Date = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                ImageUrl = request.ImageUrl,
+            };
+            
+            await _unitOfWork.GetRepository<Post>().InsertAsync(toBeAdded);
+            await _unitOfWork.CommitAsync();
+            
+            var message = "Created Successfully";
+            return message;
+        }
+        catch (Exception e)
+        {
+            return e.Message;
+        }
+    }
 }
