@@ -31,5 +31,32 @@ namespace BirthdayParty.WebApi.Controllers
             var hostPartyId = _hostPartyService.CreateHostParty(createHostPartyRequest);
             return Ok(hostPartyId);
         }
+
+        [HttpPatch(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
+        public async Task<IActionResult> UpdateHostParty([FromQuery] string id
+            , [FromBody] UpdateHostPartyRequest updateHostPartyRequest)
+        {
+            bool isSuccessful = await _hostPartyService.UpdateHostPartyRequest(id, updateHostPartyRequest);
+            if (isSuccessful)
+            {
+                return Ok("Update  successful !");
+            }
+            return Ok("Update Failed");
+        }
+
+        [HttpDelete(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
+        public async Task<IActionResult> DeleteHostParty([FromQuery] string id)
+        {
+            UpdateHostPartyRequest updateHostPartyRequest = new UpdateHostPartyRequest()
+            {
+                IsDeleted = true
+            };
+            bool isSuccessful = await _hostPartyService.UpdateHostPartyRequest(id, updateHostPartyRequest);
+            if (isSuccessful)
+            {
+                return Ok("delete  successful !");
+            }
+            return Ok("delete Failed");
+        }
     }
 }

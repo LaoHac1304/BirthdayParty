@@ -28,6 +28,8 @@ public static class DependencyServices
         services.AddScoped<IOrderDetailsService, OrderDetailService>();
         services.AddScoped<IPartyPackageService, PartyPackageService>();
         services.AddScoped<IPostService, PostService>();
+        services.AddScoped<IOrderItemsService, OrderItemService>();
+        services.AddScoped<IPaymentDetailsService, PaymentDetailService>();
         return services;
     }
 

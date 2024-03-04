@@ -80,11 +80,25 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetHostPartyResponse> accountsResponse
                 = await _unitOfWork.GetRepository<HostParty>()
                 .GetPagingListAsync(
-                    selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                    selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
             return accountsResponse;
+        }
+
+        public async Task<bool> UpdateHostPartyRequest(string id, UpdateHostPartyRequest updateHostPartyRequest)
+        {
+            if (id == string.Empty) throw new BadHttpRequestException("HostParty Id is null or not exist");
+            HostParty hostParty = await _unitOfWork
+                .GetRepository<HostParty>()
+                .SingleOrDefaultAsync(predicate: x => x.Id.Equals(id));
+            if (hostParty == null) throw new BadHttpRequestException("host party is not found");
+            hostParty = _mapper.Map<HostParty>(updateHostPartyRequest);
+            _unitOfWork.GetRepository<HostParty>().UpdateAsync(hostParty);
+            bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
+            return isSuccessful;
         }
     }
 }
