@@ -31,8 +31,13 @@ public static class DependencyServices
         services.AddScoped<IPostService, PostService>();
         services.AddScoped<IOrderItemsService, OrderItemService>();
         services.AddScoped<IPaymentDetailsService, PaymentDetailService>();
+<<<<<<< HEAD
+        services.AddScoped<IDiscountService, DiscountService>();
+        services.AddScoped<IMenuService, MenuService>();
+=======
         services.AddScoped<IHostPartyService, HostPartyService>();
 
+>>>>>>> 41b6bdccafecf633afdbd981022a9aecd76f7171
         return services;
     }
 
