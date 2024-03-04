@@ -70,5 +70,11 @@
             public const string MenusEndpoint = ApiEndpoint + "/menu";
             public const string MenuEndpoint = MenusEndpoint + "/{id}";
         }
+
+        public static class Customer
+        {
+            public const string CustomersEndpoint = ApiEndpoint + "/customers";
+            public const string CustomerEndpoint = CustomersEndpoint + "/{id}";
+        }
     }
 }

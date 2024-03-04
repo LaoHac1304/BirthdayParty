@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Payload.Request.Accounts;
+using BirthdayParty.Domain.Payload.Request.Customers;
 using BirthdayParty.Domain.Payload.Response.Accounts;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace BirthdayParty.Services.Mappers.Customers
         public CustomerMapper() {
             CreateMap<CreateCustomerRequest, Customer>();
             CreateMap<Customer, CreateCustomerResponse>().IgnoreNull();
+            CreateMap<UpdateCustomerRequest, Customer>().IgnoreNull();
         }
     }
 }
