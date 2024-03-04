@@ -26,11 +26,13 @@ public static class DependencyServices
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IOrderDetailsService, OrderDetailService>();
+
         services.AddScoped<IPartyPackageService, PartyPackageService>();
         services.AddScoped<IPostService, PostService>();
         services.AddScoped<IOrderItemsService, OrderItemService>();
         services.AddScoped<IPaymentDetailsService, PaymentDetailService>();
         services.AddScoped<IHostPartyService, HostPartyService>();
+
         return services;
     }
 
