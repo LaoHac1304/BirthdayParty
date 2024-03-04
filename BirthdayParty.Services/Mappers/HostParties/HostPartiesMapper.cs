@@ -14,7 +14,7 @@ namespace BirthdayParty.Services.Mappers.HostParties
         public HostPartiesMapper() 
         {
             CreateMap<CreateHostPartyRequest, HostParty>();
-            CreateMap<UpdateHostPartyRequest, HostParty>();
+            CreateMap<UpdateHostPartyRequest, HostParty>().IgnoreNull();
         }
     }
 }

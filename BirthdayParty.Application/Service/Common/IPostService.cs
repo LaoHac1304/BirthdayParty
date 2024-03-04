@@ -10,4 +10,5 @@ public interface IPostService
     Task<IPaginate<GetPostsResponse>> GetPosts(GetPostsRequest request);
     Task<string> UpdatePost(string id, UpdatePostRequest request);
     Task<string> RemovePost(string id);
+    Task<string> CreatePost(CreatePostRequest request);
 }

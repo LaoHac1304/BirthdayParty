@@ -19,4 +19,8 @@
     <ProjectReference Include="..\BirthdayParty.Application\BirthdayParty.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappers\NewFolder\" />
+  </ItemGroup>
+
 </Project>

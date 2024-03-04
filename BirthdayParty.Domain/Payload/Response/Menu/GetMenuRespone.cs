@@ -1,33 +1,31 @@
-﻿using BirthdayParty.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BirthdayParty.Domain.Payload.Response.HostParties
+namespace BirthdayParty.Domain.Payload.Response.Menus
 {
-    public class GetHostPartyResponse
+    public class GetMenuResponse
     {
-        public GetHostPartyResponse(string id, string? description
-            , string? rating, DateTime? createdAt, DateTime? updatedAt
-            , bool? isDeleted, string? phoneNumber)
+        public GetMenuResponse(string id, string? name, string? description, long? price, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted)
         {
             Id = id;
+            Name = name;
             Description = description;
-            Rating = rating;
+            Price = price;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             IsDeleted = isDeleted;
-            PhoneNumber = phoneNumber;
         }
 
         public string Id { get; set; }
 
+        public string? Name { get; set; }
+
         public string? Description { get; set; }
 
-        public string? Rating { get; set; }
-        public string? PhoneNumber { get; set; }
+        public long? Price { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
@@ -36,3 +34,4 @@ namespace BirthdayParty.Domain.Payload.Response.HostParties
         public bool? IsDeleted { get; set; }
     }
 }
+
