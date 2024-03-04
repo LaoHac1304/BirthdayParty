@@ -14,7 +14,7 @@ namespace BirthdayParty.Services.Mappers.Customers
     {
         public CustomerMapper() {
             CreateMap<CreateCustomerRequest, Customer>();
-            CreateMap<Customer, CreateCustomerResponse>();
+            CreateMap<Customer, CreateCustomerResponse>().IgnoreNull();
         }
     }
 }

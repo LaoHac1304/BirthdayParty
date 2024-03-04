@@ -14,6 +14,7 @@ namespace BirthdayParty.Application.Service
     public interface IAccountService
     {
         Task<CreateCustomerResponse> createCustomerAccount(CreateCustomerRequest createCustomerRequest);
+        Task<CreateAccountResponse> createAccount(CreateAccountRequest createAccountRequest);
         Task<GetAccountResponse> GetAccountById(string id);
         Task<IPaginate<GetAccountResponse>> GetAccounts(int page, int size);
         Task<bool> UpdatedAccountById(string id, UpdateAccountRequest updateAccountRequest);

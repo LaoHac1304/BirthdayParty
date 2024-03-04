@@ -32,6 +32,15 @@
         {
             public const string OrderItemsEndpoint = ApiEndpoint + "/orderitems";
             public const string OrderItemEndpoint = OrderItemsEndpoint + "/{id}";
+        public static class PaymentDetail
+        {
+            public const string PaymentDetailsEndpoint = ApiEndpoint + "/paymentdetails";
+            public const string PaymentDetailEndpoint = PaymentDetailsEndpoint + "/{id}";
+        }
+        public static class HostParty
+        {
+            public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
+            public const string HostPartyEndpoint = HostPartiesEndpoint + "/{id}";
         }
     }
 }

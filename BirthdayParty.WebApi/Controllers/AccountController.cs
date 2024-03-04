@@ -1,10 +1,15 @@
 ﻿using BirthdayParty.Application.Service;
 using BirthdayParty.Domain.Payload.Request.Accounts;
 using BirthdayParty.WebApi.Constants;
+using BirthdayParty.WebApi.Enums;
+using BirthdayParty.WebApi.Validators;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirthdayParty.WebApi.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : BaseController<AccountController>
     {
@@ -16,6 +21,7 @@ namespace BirthdayParty.WebApi.Controllers
             _accountService = accountService;
         }
 
+        [CustomAuthorize(RoleEnum.admin)]
         [HttpGet(ApiEndPointConstant.Account.AccountsEndpoint)]
         public async Task<IActionResult> GetAccounts([FromQuery] int page, [FromQuery] int size)
         {
