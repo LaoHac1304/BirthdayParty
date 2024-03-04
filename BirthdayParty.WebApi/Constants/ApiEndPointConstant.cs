@@ -38,5 +38,15 @@
             public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
             public const string HostPartyEndpoint = HostPartiesEndpoint + "/{id}";
         }
+        public static class Discount
+        {
+            public const string DiscountsEndpoint = ApiEndpoint + "/discount";
+            public const string DiscountEndpoint = DiscountsEndpoint + "/{id}";
+        }
+        public static class Menu
+        {
+            public const string MenusEndpoint = ApiEndpoint + "/menu";
+            public const string MenuEndpoint = MenusEndpoint + "/{id}";
+        }
     }
 }
