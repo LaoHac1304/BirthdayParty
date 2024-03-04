@@ -25,6 +25,13 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(hostParties);
         }
 
+        [HttpGet(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
+        public async Task<IActionResult> GetHostParty(string id)
+        {
+            var hostParty = await _hostPartyService.GetHostPartyById(id);
+            return Ok(hostParty);
+        }
+
         [HttpPost(ApiEndPointConstant.HostParty.HostPartiesEndpoint)]
         public async Task<IActionResult> CreateHostParty([FromBody] CreateHostPartyRequest createHostPartyRequest)
         {
@@ -32,8 +39,8 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(hostPartyId);
         }
 
-        [HttpPatch(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
-        public async Task<IActionResult> UpdateHostParty([FromQuery] string id
+        [HttpPut(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
+        public async Task<IActionResult> UpdateHostParty(string id
             , [FromBody] UpdateHostPartyRequest updateHostPartyRequest)
         {
             bool isSuccessful = await _hostPartyService.UpdateHostPartyRequest(id, updateHostPartyRequest);
@@ -45,7 +52,7 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
         [HttpDelete(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
-        public async Task<IActionResult> DeleteHostParty([FromQuery] string id)
+        public async Task<IActionResult> DeleteHostParty(string id)
         {
             UpdateHostPartyRequest updateHostPartyRequest = new UpdateHostPartyRequest()
             {
