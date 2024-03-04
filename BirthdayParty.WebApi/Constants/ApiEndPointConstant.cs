@@ -28,6 +28,10 @@
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
         }
 
+        public static class OrderItem
+        {
+            public const string OrderItemsEndpoint = ApiEndpoint + "/orderitems";
+            public const string OrderItemEndpoint = OrderItemsEndpoint + "/{id}";
         public static class PaymentDetail
         {
             public const string PaymentDetailsEndpoint = ApiEndpoint + "/paymentdetails";
