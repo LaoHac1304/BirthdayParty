@@ -131,9 +131,10 @@ public class PostService : BaseService<PostService>, IPostService
                 Id = Guid.NewGuid().ToString(),
                 IsDeleted = false,
                 Content = request.Content,
-                Date = DateTime.Now,
+                Date = request.Date,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+                PartyPackageId = request.PartyPackageId,
                 ImageUrl = request.ImageUrl,
             };
             
