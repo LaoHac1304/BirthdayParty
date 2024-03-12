@@ -1,4 +1,5 @@
-﻿using BirthdayParty.Domain.Payload.Request.Authentications;
+﻿using BirthdayParty.Domain.Models;
+using BirthdayParty.Domain.Payload.Request.Authentications;
 using BirthdayParty.Domain.Payload.Response;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace BirthdayParty.Application.Service.Common
     public interface IAuthenticationService
     {
         Task<LoginResponse> Login(LoginRequest loginRequest);
+        Task<Account> CreateAccount(string email, string role);
     }
 }
