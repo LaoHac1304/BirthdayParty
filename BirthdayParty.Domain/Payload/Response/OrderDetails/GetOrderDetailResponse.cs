@@ -1,3 +1,4 @@
+
 ﻿using BirthdayParty.Domain.Models;
 
 namespace BirthdayParty.Domain.Payload.Response.OrderDetails
@@ -19,7 +20,6 @@ namespace BirthdayParty.Domain.Payload.Response.OrderDetails
         public string Id { get; set; }
         public string? CustomerId { get; set; }
         public Customer? Customer { get; set; }
-
         public long? TotalPrice { get; set; }
 
         public DateTime? Date { get; set; }

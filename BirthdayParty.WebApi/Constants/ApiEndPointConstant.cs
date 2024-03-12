@@ -28,10 +28,14 @@
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
         }
 
+
         public static class OrderItem
         {
             public const string OrderItemsEndpoint = ApiEndpoint + "/orderitems";
             public const string OrderItemEndpoint = OrderItemsEndpoint + "/{id}";
+        }
+
+
         public static class PaymentDetail
         {
             public const string PaymentDetailsEndpoint = ApiEndpoint + "/paymentdetails";
@@ -41,6 +45,36 @@
         {
             public const string HostPartiesEndpoint = ApiEndpoint + "/hostparties";
             public const string HostPartyEndpoint = HostPartiesEndpoint + "/{id}";
+        }
+
+        public static class PartyPackage
+        {
+            public const string PartyPackagesEndpoint = ApiEndpoint + "/partypackages";
+            public const string PartyPackageEndpoint = PartyPackagesEndpoint + "/{id}";
+        }
+
+        public static class Post
+        {
+            public const string PostsEndpoint = ApiEndpoint + "/posts";
+            public const string PostEndpoint = PostsEndpoint + "/{id}";
+        }
+
+        public static class Discount
+        {
+            public const string DiscountsEndpoint = ApiEndpoint + "/discounts";
+            public const string DiscountEndpoint = DiscountsEndpoint + "/{id}";
+
+        }
+        public static class Menu
+        {
+            public const string MenusEndpoint = ApiEndpoint + "/menu";
+            public const string MenuEndpoint = MenusEndpoint + "/{id}";
+        }
+
+        public static class Customer
+        {
+            public const string CustomersEndpoint = ApiEndpoint + "/customers";
+            public const string CustomerEndpoint = CustomersEndpoint + "/{id}";
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BirthdayParty.Application.Service
         Task<GetOrderDetailResponse> GetOrderDetailById(string id);
 
         Task<bool> UpdatedOrderDetailById(string id);
-      
+
         Task<GetOrderDetailResponse> CreateOrderDetail(CreateOrderDetailRequest createOrderDetailRequest);
     }
 }
