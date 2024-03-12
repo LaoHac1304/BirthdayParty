@@ -48,7 +48,19 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetOrderItemsResponse> response
             = await _unitOfWork.GetRepository<OrderItem>()
             .GetPagingListAsync(
-                selector: x => new GetOrderItemsResponse(x.Id, x.Price, x.Date, x.PartyPackageId, x.OrderDetailId, x.IsPreorder, x.Status, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetOrderItemsResponse(
+                    x.Id,
+                    x.Price,
+                    x.Date,
+                    x.PartyPackageId,
+                    x.PartyPackage!,
+                    x.OrderDetailId,
+                    x.OrderDetail!,
+                    x.IsPreorder,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted),
                 page: page,
                 size: size,
                 orderBy: x => x.OrderBy(x => x.CreatedAt));
@@ -61,7 +73,19 @@ namespace BirthdayParty.Services.Service
             if (id == string.Empty) throw new BadHttpRequestException("Order Item Id is null or not exist");
 
             GetOrderItemsResponse response = await _unitOfWork.GetRepository<OrderItem>().SingleOrDefaultAsync(
-                selector: x => new GetOrderItemsResponse(x.Id, x.Price, x.Date, x.PartyPackageId, x.OrderDetailId, x.IsPreorder, x.Status, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetOrderItemsResponse(
+                    x.Id,
+                    x.Price,
+                    x.Date,
+                    x.PartyPackageId,
+                    x.PartyPackage!,
+                    x.OrderDetailId,
+                    x.OrderDetail!,
+                    x.IsPreorder,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted),
                 predicate: x => x.Id.Equals(id));
 
             return response;
