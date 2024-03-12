@@ -51,7 +51,8 @@ namespace BirthdayParty.Services.Service
             .GetPagingListAsync(
                 include: x => x
                 .Include(x => x.OrderDetail!)
-                .ThenInclude(x => x.Customer!),
+                .ThenInclude(x => x.Customer!)
+                .ThenInclude(x => x.User!),
 
                 selector: x => new GetOrderItemsResponse(
                     x.Id,
@@ -104,6 +105,10 @@ namespace BirthdayParty.Services.Service
 
                 OrderItem orderItem = await _unitOfWork.GetRepository<OrderItem>()
                     .SingleOrDefaultAsync(
+                    include: x => x
+                        .Include(x => x.OrderDetail!)
+                        .ThenInclude(x => x.Customer!)
+                        .ThenInclude(x => x.User!),
                     predicate: x => x.Id.Equals(id));
 
                 if (orderItem == null) throw new BadHttpRequestException("Order item was not found");
@@ -117,15 +122,13 @@ namespace BirthdayParty.Services.Service
                 _unitOfWork.GetRepository<OrderItem>().UpdateAsync(orderItem);
 
                 bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
-                
+
                 return isSuccessful;
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
-
         }
     }
 }
