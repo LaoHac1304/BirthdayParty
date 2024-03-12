@@ -294,9 +294,9 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__order_det__custo__76969D2E");
+            //entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
+            //    .HasForeignKey(d => d.CustomerId)
+            //    .HasConstraintName("FK__order_det__custo__76969D2E");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>

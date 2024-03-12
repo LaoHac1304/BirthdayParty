@@ -6,6 +6,7 @@ using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.OrderItems;
 using BirthdayParty.Domain.Payload.Response.OrderItems;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BirthdayParty.Services.Service
@@ -48,6 +49,10 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetOrderItemsResponse> response
             = await _unitOfWork.GetRepository<OrderItem>()
             .GetPagingListAsync(
+                include: x => x
+                .Include(x => x.OrderDetail!)
+                .ThenInclude(x => x.Customer!),
+
                 selector: x => new GetOrderItemsResponse(
                     x.Id,
                     x.Price,
