@@ -49,6 +49,7 @@ namespace BirthdayParty.Services.Service
             {
                 if (existAccount.IsDeleted == true) return null;
             }
+
             HostParty hostParty = _mapper.Map<HostParty>(createHostPartyRequest);
             return hostParty.Id;
         }
@@ -64,6 +65,7 @@ namespace BirthdayParty.Services.Service
 
                 };
             CreateAccountResponse createAccountResponse = await _accountService.createAccount(createAccountRequest);
+
             HostParty hostParty = new HostParty()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -102,6 +104,7 @@ namespace BirthdayParty.Services.Service
             return isSuccessful;
         }
 
+
         public async Task<GetHostPartyResponse> GetHostPartyById(string id)
         {
             GetHostPartyResponse hostPartyResponse = await _unitOfWork
@@ -114,5 +117,6 @@ namespace BirthdayParty.Services.Service
             if (hostPartyResponse == null) throw new BadHttpRequestException("host party is not found");
             return hostPartyResponse;
         }
+
     }
 }

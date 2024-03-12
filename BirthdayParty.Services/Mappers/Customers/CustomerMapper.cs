@@ -17,6 +17,7 @@ namespace BirthdayParty.Services.Mappers.Customers
             CreateMap<CreateCustomerRequest, Customer>();
             CreateMap<Customer, CreateCustomerResponse>().IgnoreNull();
             CreateMap<UpdateCustomerRequest, Customer>().IgnoreNull();
+
         }
     }
 }

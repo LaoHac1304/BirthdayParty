@@ -6,6 +6,7 @@ using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BirthdayParty.Services.Service
@@ -21,11 +22,19 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetOrderDetailResponse> response
                 = await _unitOfWork.GetRepository<OrderDetail>()
                 .GetPagingListAsync(
-                    selector: x => new GetOrderDetailResponse(x.Id, x.CustomerId, x.TotalPrice, x.Date, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+
+                    selector: x => new GetOrderDetailResponse(
+                        x.Id,
+                        x.CustomerId,
+                        x.Customer!,
+                        x.TotalPrice,
+                        x.Date,
+                        x.CreatedAt,
+                        x.UpdatedAt,
+                        x.IsDeleted),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
-            
             return response;
         }
 
@@ -34,13 +43,13 @@ namespace BirthdayParty.Services.Service
             if (id == string.Empty) throw new BadHttpRequestException("Order Detail Id is null or not exist");
 
             GetOrderDetailResponse response = await _unitOfWork.GetRepository<OrderDetail>().SingleOrDefaultAsync(
-                selector: x => new GetOrderDetailResponse(x.Id, x.CustomerId, x.TotalPrice, x.Date, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetOrderDetailResponse(x.Id, x.CustomerId,x.Customer!, x.TotalPrice, x.Date, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
                 predicate: x => x.Id.Equals(id));
-            
+
             return response;
         }
 
-        public async Task<bool> UpdatedOrderDetailById(string id )
+        public async Task<bool> UpdatedOrderDetailById(string id)
         {
             if (id == string.Empty) throw new BadHttpRequestException("Order Id is null or not exist");
 
@@ -55,8 +64,7 @@ namespace BirthdayParty.Services.Service
             order.UpdatedAt = DateTime.UtcNow;
 
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
-
-            return isSuccessful;    
+            return isSuccessful;
 
         }
 
@@ -68,12 +76,13 @@ namespace BirthdayParty.Services.Service
 
             if (customer == null) throw new BadHttpRequestException("Customer was not found");
 
-            var entity = _mapper.Map<OrderDetail> (createOrderDetailRequest);
+            var entity = _mapper.Map<OrderDetail>(createOrderDetailRequest);
 
             //Hotfix id
             entity.Id = Guid.NewGuid().ToString();
 
-             await _unitOfWork.GetRepository<OrderDetail>().InsertAsync(entity);
+
+            await _unitOfWork.GetRepository<OrderDetail>().InsertAsync(entity);
             await _unitOfWork.CommitAsync();
 
             var data = _mapper.Map<GetOrderDetailResponse>(
@@ -82,7 +91,5 @@ namespace BirthdayParty.Services.Service
 
             return data;
         }
-
-
     }
 }

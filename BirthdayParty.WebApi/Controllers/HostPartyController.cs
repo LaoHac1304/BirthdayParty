@@ -31,7 +31,7 @@ namespace BirthdayParty.WebApi.Controllers
             var hostParty = await _hostPartyService.GetHostPartyById(id);
             return Ok(hostParty);
         }
-
+        
         [HttpPost(ApiEndPointConstant.HostParty.HostPartiesEndpoint)]
         public async Task<IActionResult> CreateHostParty([FromBody] CreateHostPartyRequest createHostPartyRequest)
         {
@@ -39,8 +39,10 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(hostPartyId);
         }
 
+
         [HttpPut(ApiEndPointConstant.HostParty.HostPartyEndpoint)]
         public async Task<IActionResult> UpdateHostParty(string id
+
             , [FromBody] UpdateHostPartyRequest updateHostPartyRequest)
         {
             bool isSuccessful = await _hostPartyService.UpdateHostPartyRequest(id, updateHostPartyRequest);
