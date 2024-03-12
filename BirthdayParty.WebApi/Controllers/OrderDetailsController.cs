@@ -36,7 +36,7 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
         // POST api/<OrderDetailsController>
-        [HttpPost]
+        [HttpPost(ApiEndPointConstant.OrderDetail.OrderDetailsEndpoint)]
         public async Task<IActionResult> Post([FromBody] CreateOrderDetailRequest createOrderDetailRequest)
         {
             var order = await orderDetailsService.CreateOrderDetail(createOrderDetailRequest);

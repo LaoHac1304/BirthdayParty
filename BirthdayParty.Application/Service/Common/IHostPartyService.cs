@@ -13,6 +13,7 @@ namespace BirthdayParty.Application.Service.Common
     {
         Task<string> CreateHostParty(CreateHostPartyRequest createHostPartyRequest);
         Task<IPaginate<GetHostPartyResponse>> GetHostParties(int page, int size);
+        Task<GetHostPartyResponse> GetHostPartyById(string id);
         Task<bool> UpdateHostPartyRequest(string id, UpdateHostPartyRequest updateHostPartyRequest);
     }
 }

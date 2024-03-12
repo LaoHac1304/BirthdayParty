@@ -36,7 +36,7 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(account);
         }
 
-        [HttpPatch(ApiEndPointConstant.Account.AccountEndpoint)]
+        [HttpPut(ApiEndPointConstant.Account.AccountEndpoint)]
         public async Task<IActionResult> UpdateAccountById(string id, UpdateAccountRequest updateAccountRequest)
         {
             bool isSuccessful = await _accountService.UpdatedAccountById(id, updateAccountRequest);

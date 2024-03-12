@@ -94,6 +94,8 @@ namespace BirthdayParty.Infrastructure.Repository.Common
         public Task<IPaginate<TResult>> GetPagingListAsync<TResult>(Expression<Func<T, TResult>> selector, Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int page = 1, int size = 10)
         {
+            if (page <= 0) page = 1;
+            if (size <= 0) size = 10;
             IQueryable<T> query = _dbSet;
             if (include != null) query = include(query);
             if (predicate != null) query = query.Where(predicate);

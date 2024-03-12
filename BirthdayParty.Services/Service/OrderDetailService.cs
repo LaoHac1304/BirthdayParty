@@ -22,6 +22,7 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetOrderDetailResponse> response
                 = await _unitOfWork.GetRepository<OrderDetail>()
                 .GetPagingListAsync(
+
                     selector: x => new GetOrderDetailResponse(
                         x.Id,
                         x.CustomerId,
@@ -34,7 +35,6 @@ namespace BirthdayParty.Services.Service
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
-
             return response;
         }
 
@@ -65,6 +65,7 @@ namespace BirthdayParty.Services.Service
 
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
             return isSuccessful;
+
         }
 
         public async Task<GetOrderDetailResponse> CreateOrderDetail(CreateOrderDetailRequest createOrderDetailRequest)
@@ -79,6 +80,7 @@ namespace BirthdayParty.Services.Service
 
             //Hotfix id
             entity.Id = Guid.NewGuid().ToString();
+
 
             await _unitOfWork.GetRepository<OrderDetail>().InsertAsync(entity);
             await _unitOfWork.CommitAsync();
