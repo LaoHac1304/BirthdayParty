@@ -6,6 +6,7 @@ using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.OrderItems;
 using BirthdayParty.Domain.Payload.Response.OrderItems;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BirthdayParty.Services.Service
@@ -48,7 +49,24 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetOrderItemsResponse> response
             = await _unitOfWork.GetRepository<OrderItem>()
             .GetPagingListAsync(
-                selector: x => new GetOrderItemsResponse(x.Id, x.Price, x.Date, x.PartyPackageId, x.OrderDetailId, x.IsPreorder, x.Status, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                include: x => x
+                .Include(x => x.OrderDetail!)
+                .ThenInclude(x => x.Customer!)
+                .ThenInclude(x => x.User!),
+
+                selector: x => new GetOrderItemsResponse(
+                    x.Id,
+                    x.Price,
+                    x.Date,
+                    x.PartyPackageId,
+                    x.PartyPackage!,
+                    x.OrderDetailId,
+                    x.OrderDetail!,
+                    x.IsPreorder,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted),
                 page: page,
                 size: size,
                 orderBy: x => x.OrderBy(x => x.CreatedAt));
@@ -61,7 +79,19 @@ namespace BirthdayParty.Services.Service
             if (id == string.Empty) throw new BadHttpRequestException("Order Item Id is null or not exist");
 
             GetOrderItemsResponse response = await _unitOfWork.GetRepository<OrderItem>().SingleOrDefaultAsync(
-                selector: x => new GetOrderItemsResponse(x.Id, x.Price, x.Date, x.PartyPackageId, x.OrderDetailId, x.IsPreorder, x.Status, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetOrderItemsResponse(
+                    x.Id,
+                    x.Price,
+                    x.Date,
+                    x.PartyPackageId,
+                    x.PartyPackage!,
+                    x.OrderDetailId,
+                    x.OrderDetail!,
+                    x.IsPreorder,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted),
                 predicate: x => x.Id.Equals(id));
 
             return response;
@@ -75,6 +105,10 @@ namespace BirthdayParty.Services.Service
 
                 OrderItem orderItem = await _unitOfWork.GetRepository<OrderItem>()
                     .SingleOrDefaultAsync(
+                    include: x => x
+                        .Include(x => x.OrderDetail!)
+                        .ThenInclude(x => x.Customer!)
+                        .ThenInclude(x => x.User!),
                     predicate: x => x.Id.Equals(id));
 
                 if (orderItem == null) throw new BadHttpRequestException("Order item was not found");
@@ -88,15 +122,13 @@ namespace BirthdayParty.Services.Service
                 _unitOfWork.GetRepository<OrderItem>().UpdateAsync(orderItem);
 
                 bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
-                
+
                 return isSuccessful;
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
-
         }
     }
 }

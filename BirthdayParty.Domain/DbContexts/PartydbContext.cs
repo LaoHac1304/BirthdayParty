@@ -116,9 +116,9 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(64)
                 .HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Customers)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__customer__user_i__02084FDA");
+            //entity.HasOne(d => d.User).WithMany(p => p.Customers)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__customer__user_i__02084FDA");
         });
 
         modelBuilder.Entity<Discount>(entity =>
@@ -178,9 +178,9 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(64)
                 .HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.HostParties)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__host_part__user___02FC7413");
+            //entity.HasOne(d => d.User).WithMany(p => p.HostParties)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__host_part__user___02FC7413");
         });
 
         modelBuilder.Entity<Menu>(entity =>
@@ -257,13 +257,13 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Receiver).WithMany(p => p.MessageReceivers)
-                .HasForeignKey(d => d.ReceiverId)
-                .HasConstraintName("FK__message__receive__04E4BC85");
+            //entity.HasOne(d => d.Receiver).WithMany(p => p.MessageReceivers)
+            //    .HasForeignKey(d => d.ReceiverId)
+            //    .HasConstraintName("FK__message__receive__04E4BC85");
 
-            entity.HasOne(d => d.Sender).WithMany(p => p.MessageSenders)
-                .HasForeignKey(d => d.SenderId)
-                .HasConstraintName("FK__message__sender___03F0984C");
+            //entity.HasOne(d => d.Sender).WithMany(p => p.MessageSenders)
+            //    .HasForeignKey(d => d.SenderId)
+            //    .HasConstraintName("FK__message__sender___03F0984C");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
@@ -294,9 +294,9 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__order_det__custo__76969D2E");
+            //entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
+            //    .HasForeignKey(d => d.CustomerId)
+            //    .HasConstraintName("FK__order_det__custo__76969D2E");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>

@@ -21,11 +21,11 @@ public partial class Account
 
     public bool? IsDeleted { get; set; }
 
-    public virtual ICollection<Customer> Customers { get; } = new List<Customer>();
+    //public virtual ICollection<Customer> Customers { get; } = new List<Customer>();
 
-    public virtual ICollection<HostParty> HostParties { get; } = new List<HostParty>();
+    //public virtual ICollection<HostParty> HostParties { get; } = new List<HostParty>();
 
-    public virtual ICollection<Message> MessageReceivers { get; } = new List<Message>();
+    //public virtual ICollection<Message> MessageReceivers { get; } = new List<Message>();
 
-    public virtual ICollection<Message> MessageSenders { get; } = new List<Message>();
+    //public virtual ICollection<Message> MessageSenders { get; } = new List<Message>();
 }
