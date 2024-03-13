@@ -15,32 +15,20 @@ namespace BirthdayParty.Services.Service;
 
 public class PartyPackageService : BaseService<PartyPackageService>, IPartyPackageService
 {
+    private readonly IPostService _postService;
     public PartyPackageService(IUnitOfWork unitOfWork, ILogger<PartyPackageService> logger, IMapper mapper,
+        IPostService postService,
         IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
     {
+        _postService = postService;
     }
 
     public async Task<string> CreatePost(string partyPackageId, CreatePostRequest request)
     {
         try
         {
-            var toBeAdded = new Post
-            {
-                Id = Guid.NewGuid().ToString(),
-                PartyPackageId = partyPackageId,
-                Content = request.Content,
-                ImageUrl = request.ImageUrl,
-                Date = DateTime.Today,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                IsDeleted = false
-            };
 
-            await _unitOfWork.GetRepository<Post>().InsertAsync(toBeAdded);
-            await _unitOfWork.CommitAsync();
-
-            var message = "Created Successfully";
-            return message;
+            return await _postService.CreatePost(request);
         }
         catch (Exception e)
         {

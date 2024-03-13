@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BirthdayParty.Application.Repository.Common;
+using BirthdayParty.Application.Service;
 using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
@@ -12,9 +13,12 @@ namespace BirthdayParty.Services.Service;
 
 public class PostService : BaseService<PostService>, IPostService
 {
+    private readonly IUploadFileService _uploadFileService;
     public PostService(IUnitOfWork unitOfWork, ILogger<PostService> logger, IMapper mapper,
-        IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, IUploadFileService uploadFileService) 
+        : base(unitOfWork, logger, mapper, httpContextAccessor)
     {
+        _uploadFileService = uploadFileService;
     }
 
     public Task<GetSinglePostResponse> GetPost(string id)
@@ -126,6 +130,8 @@ public class PostService : BaseService<PostService>, IPostService
     {
         try
         {
+            string imageUrl = await _uploadFileService.UploadFile(request.ImageUrl);
+
             var toBeAdded = new Post()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -135,7 +141,7 @@ public class PostService : BaseService<PostService>, IPostService
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 PartyPackageId = request.PartyPackageId,
-                ImageUrl = request.ImageUrl,
+                ImageUrl = imageUrl,
             };
             
             await _unitOfWork.GetRepository<Post>().InsertAsync(toBeAdded);

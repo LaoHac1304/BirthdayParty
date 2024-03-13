@@ -58,7 +58,7 @@ public class PostController : BaseController<PostController>
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> CreatePost([FromBody] CreatePostRequest request)
+    public async Task<ActionResult<string>> CreatePost([FromForm] CreatePostRequest request)
     {
         string result = await _postService.CreatePost(request);
         return Ok(result);

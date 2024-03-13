@@ -34,6 +34,7 @@ public static class DependencyServices
         services.AddScoped<IMenuService, MenuService>();
         services.AddScoped<IHostPartyService, HostPartyService>();
         services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IUploadFileService, UploadFileService>();
         return services;
     }
 
