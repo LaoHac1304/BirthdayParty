@@ -19,6 +19,7 @@ try
     builder.Host.UseNLog()*/;
 
     // Add services to the container.
+    builder.Services.AddHttpClient();
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: CorsConstant.PolicyName,
