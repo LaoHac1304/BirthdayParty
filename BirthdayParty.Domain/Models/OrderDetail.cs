@@ -1,19 +1,19 @@
 ﻿using BirthdayParty.Domain.Validation.OrderDetailValidation;
-using System;
-using System.Collections.Generic;
 
 namespace BirthdayParty.Domain.Models;
 
 public partial class OrderDetail
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
+    public string? CustomerId { get; set; }
 
     public long? TotalPrice { get; set; }
 
-    [OrderDetailDate("Date must be after today.")]
-    public DateTime? Date { get; set; }
+    public DateTime? Date { get; set; } = DateTime.UtcNow;
 
-    public string? CustomerId { get; set; }
+    public DateTime? StartDate { get; set; }
+    [OrderDetailDate(nameof(StartDate),"End date must be after start date.")]
+    public DateTime? EndDate { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

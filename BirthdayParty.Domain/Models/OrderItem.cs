@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BirthdayParty.Domain.Models;
+﻿namespace BirthdayParty.Domain.Models;
 
 public partial class OrderItem
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
+    public string? ChildrenName { get; set; }
+    public DateTime ChildrenBod { get; set; }
+    public string? Gender { get; set; }
     public long? Price { get; set; }
 
     public DateTime? Date { get; set; }
