@@ -22,6 +22,7 @@ namespace BirthdayParty.Domain.Payload.Response.HostParties
             PhoneNumber = phoneNumber;
             Email = email;
         }
+        public GetHostPartyResponse() { }
 
         public string Id { get; set; }
 

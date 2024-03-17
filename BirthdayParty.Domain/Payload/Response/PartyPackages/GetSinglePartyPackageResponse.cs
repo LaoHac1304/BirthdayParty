@@ -1,4 +1,7 @@
-﻿namespace BirthdayParty.Domain.Payload.Response.PartyPackages;
+﻿using BirthdayParty.Domain.Models;
+using BirthdayParty.Domain.Payload.Response.HostParties;
+
+namespace BirthdayParty.Domain.Payload.Response.PartyPackages;
 
 public class GetSinglePartyPackageResponse
 {
@@ -15,7 +18,8 @@ public class GetSinglePartyPackageResponse
         public DateTime? AvailableDates { get; set; }
     
         public string? HostPartyId { get; set; }
-    
+        public GetHostPartyResponse? HostParty { get; set; }
+
         public string? Status { get; set; }
     
         public int? Price { get; set; }

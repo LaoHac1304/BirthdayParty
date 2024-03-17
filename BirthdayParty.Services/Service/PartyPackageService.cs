@@ -5,6 +5,7 @@ using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.PartyPackages;
 using BirthdayParty.Domain.Payload.Request.Posts;
+using BirthdayParty.Domain.Payload.Response.HostParties;
 using BirthdayParty.Domain.Payload.Response.PartyPackages;
 using BirthdayParty.Domain.Payload.Response.Posts;
 using Microsoft.AspNetCore.Http;
@@ -209,7 +210,8 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     AvailableDates = x.AvailableDates,
                     ImageUrl = x.ImageUrl,
                     IsDeleted = x.IsDeleted,
-                    AvailableForPreorder = x.AvailableForPreorder
+                    AvailableForPreorder = x.AvailableForPreorder,
+                    HostParty = _mapper.Map<GetHostPartyResponse>(x.HostParty),
                 });
             
             return result;
