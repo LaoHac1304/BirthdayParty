@@ -11,7 +11,7 @@ namespace BirthdayParty.Domain.Payload.Response.HostParties
     {
         public GetHostPartyResponse(string id, string? description
             , string? rating, DateTime? createdAt, DateTime? updatedAt
-            , bool? isDeleted, string? phoneNumber)
+            , bool? isDeleted, string? phoneNumber, string? email)
         {
             Id = id;
             Description = description;
@@ -20,6 +20,7 @@ namespace BirthdayParty.Domain.Payload.Response.HostParties
             UpdatedAt = updatedAt;
             IsDeleted = isDeleted;
             PhoneNumber = phoneNumber;
+            Email = email;
         }
 
         public string Id { get; set; }
@@ -28,6 +29,7 @@ namespace BirthdayParty.Domain.Payload.Response.HostParties
 
         public string? Rating { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 

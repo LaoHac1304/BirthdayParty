@@ -15,5 +15,6 @@ namespace BirthdayParty.Application.Service.Common
         Task<IPaginate<GetHostPartyResponse>> GetHostParties(int page, int size);
         Task<GetHostPartyResponse> GetHostPartyById(string id);
         Task<bool> UpdateHostPartyRequest(string id, UpdateHostPartyRequest updateHostPartyRequest);
+        Task<GetHostPartyResponse> GetHostPartyByAccountId(string accountId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace BirthdayParty.Domain.Payload.Response.Customers
 {
     public class GetCustomerResponse
     {
-        public GetCustomerResponse(string? id, string? fullName, DateTime? dayOfBirth, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, string? phoneNumber)
+        public GetCustomerResponse(string? id, string? fullName, DateTime? dayOfBirth, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, string? phoneNumber, string? email)
         {
             Id = id;
             FullName = fullName;
@@ -17,6 +18,8 @@ namespace BirthdayParty.Domain.Payload.Response.Customers
             UpdatedAt = updatedAt;
             IsDeleted = isDeleted;
             PhoneNumber = phoneNumber;
+            Email = email;
+            
         }
 
         public string Id { get; set; }
@@ -29,6 +32,7 @@ namespace BirthdayParty.Domain.Payload.Response.Customers
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
+        public string? Email {  get; set; }
 
         public bool? IsDeleted { get; set; }
     }

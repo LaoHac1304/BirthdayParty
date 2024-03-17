@@ -27,13 +27,26 @@ namespace BirthdayParty.Services.Service
         {
         }
 
+        public async Task<GetCustomerResponse> GetCustomerByAccountId(string accountId)
+        {
+            GetCustomerResponse CustomerResponse = await _unitOfWork
+                .GetRepository<Customer>()
+                .SingleOrDefaultAsync(
+                    selector: x => new GetCustomerResponse(x.Id, x.FullName, x.DayOfBirth
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
+                    predicate: x => x.UserId.Equals(accountId)
+                 );
+            if (CustomerResponse == null) throw new BadHttpRequestException("customer is not found");
+            return CustomerResponse;
+        }
+
         public async Task<GetCustomerResponse> GetCustomerById(string id)
         {
             GetCustomerResponse CustomerResponse = await _unitOfWork
                 .GetRepository<Customer>()
                 .SingleOrDefaultAsync(
                     selector: x => new GetCustomerResponse(x.Id, x.FullName, x.DayOfBirth
-                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber),
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     predicate: x => x.Id.Equals(id)
                  );
             if (CustomerResponse == null) throw new BadHttpRequestException("customer is not found");
@@ -46,7 +59,7 @@ namespace BirthdayParty.Services.Service
                 = await _unitOfWork.GetRepository<Customer>()
                 .GetPagingListAsync(
                     selector: x => new GetCustomerResponse(x.Id, x.FullName, x.DayOfBirth
-                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber),
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
