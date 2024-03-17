@@ -30,7 +30,7 @@ public partial class PartydbContext : DbContext
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
-    public virtual DbSet<OrderItem> OrderItems { get; set; }
+    //public virtual DbSet<OrderItem> OrderItems { get; set; }
 
     public virtual DbSet<PartyPackage> PartyPackages { get; set; }
 
@@ -299,51 +299,51 @@ public partial class PartydbContext : DbContext
             //    .HasConstraintName("FK__order_det__custo__76969D2E");
         });
 
-        modelBuilder.Entity<OrderItem>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+        //modelBuilder.Entity<OrderItem>(entity =>
+        //{
+        //    entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("order_items");
+        //    entity.ToTable("order_items");
 
-            entity.HasIndex(e => e.OrderDetailId, "FK__order_ite__order__7F2BE32F");
+        //    entity.HasIndex(e => e.OrderDetailId, "FK__order_ite__order__7F2BE32F");
 
-            entity.HasIndex(e => e.PartyPackageId, "FK__order_ite__party__787EE5A0");
+        //    entity.HasIndex(e => e.PartyPackageId, "FK__order_ite__party__787EE5A0");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(64)
-                .HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasMaxLength(6)
-                .HasColumnName("created_at");
-            entity.Property(e => e.Date)
-                .HasMaxLength(6)
-                .HasColumnName("date");
-            entity.Property(e => e.IsDeleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("is_deleted");
-            entity.Property(e => e.IsPreorder).HasColumnName("is_preorder");
-            entity.Property(e => e.OrderDetailId)
-                .HasMaxLength(64)
-                .HasColumnName("order_detail_id");
-            entity.Property(e => e.PartyPackageId)
-                .HasMaxLength(64)
-                .HasColumnName("party_package_id");
-            entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.Status)
-                .HasMaxLength(255)
-                .HasColumnName("status");
-            entity.Property(e => e.UpdatedAt)
-                .HasMaxLength(6)
-                .HasColumnName("updated_at");
+        //    entity.Property(e => e.Id)
+        //        .HasMaxLength(64)
+        //        .HasColumnName("id");
+        //    entity.Property(e => e.CreatedAt)
+        //        .HasMaxLength(6)
+        //        .HasColumnName("created_at");
+        //    entity.Property(e => e.Date)
+        //        .HasMaxLength(6)
+        //        .HasColumnName("date");
+        //    entity.Property(e => e.IsDeleted)
+        //        .HasDefaultValueSql("'0'")
+        //        .HasColumnName("is_deleted");
+        //    entity.Property(e => e.IsPreorder).HasColumnName("is_preorder");
+        //    entity.Property(e => e.OrderDetailId)
+        //        .HasMaxLength(64)
+        //        .HasColumnName("order_detail_id");
+        //    entity.Property(e => e.PartyPackageId)
+        //        .HasMaxLength(64)
+        //        .HasColumnName("party_package_id");
+        //    entity.Property(e => e.Price).HasColumnName("price");
+        //    entity.Property(e => e.Status)
+        //        .HasMaxLength(255)
+        //        .HasColumnName("status");
+        //    entity.Property(e => e.UpdatedAt)
+        //        .HasMaxLength(6)
+        //        .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.OrderDetail).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.OrderDetailId)
-                .HasConstraintName("FK__order_ite__order__778AC167");
+        //    entity.HasOne(d => d.OrderDetail).WithMany(p => p.OrderItems)
+        //        .HasForeignKey(d => d.OrderDetailId)
+        //        .HasConstraintName("FK__order_ite__order__778AC167");
 
-            entity.HasOne(d => d.PartyPackage).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.PartyPackageId)
-                .HasConstraintName("FK__order_ite__party__00200768");
-        });
+        //    entity.HasOne(d => d.PartyPackage).WithMany(p => p.OrderItems)
+        //        .HasForeignKey(d => d.PartyPackageId)
+        //        .HasConstraintName("FK__order_ite__party__00200768");
+        //});
 
         modelBuilder.Entity<PartyPackage>(entity =>
         {
@@ -358,10 +358,10 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(64)
                 .HasColumnName("id");
-            entity.Property(e => e.AvailableDates)
-                .HasMaxLength(6)
-                .HasColumnName("available_dates");
-            entity.Property(e => e.AvailableForPreorder).HasColumnName("available_for_preorder");
+            //entity.Property(e => e.AvailableDates)
+                //.HasMaxLength(6)
+                //.HasColumnName("available_dates");
+            //entity.Property(e => e.AvailableForPreorder).HasColumnName("available_for_preorder");
             entity.Property(e => e.CreatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("created_at");

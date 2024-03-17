@@ -14,8 +14,8 @@ namespace BirthdayParty.Services.Mappers.OrderItems
     {
         public OrderItemsMapper()
         {
-            CreateMap<GetOrderItemsResponse, OrderItem>().ReverseMap();
-            CreateMap<CreateOrderItemsRequest, OrderItem>().ReverseMap();
+            //CreateMap<GetOrderItemsResponse, OrderItem>().ReverseMap();
+            //CreateMap<CreateOrderItemsRequest, OrderItem>().ReverseMap();
             
         }
     }

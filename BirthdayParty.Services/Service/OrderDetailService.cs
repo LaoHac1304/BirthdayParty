@@ -6,7 +6,6 @@ using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BirthdayParty.Services.Service
@@ -25,13 +24,20 @@ namespace BirthdayParty.Services.Service
 
                     selector: x => new GetOrderDetailResponse(
                         x.Id,
+                        x.PartyPackageId,
                         x.CustomerId,
-                        x.Customer!,
+                        x.ChildrenName,
+                        x.ChildrenBirthday,
+                        x.NumberOfChildren,
                         x.TotalPrice,
+                        x.StartTime,
+                        x.EndTime,
                         x.Date,
                         x.CreatedAt,
                         x.UpdatedAt,
-                        x.IsDeleted),
+                        x.IsDeleted,
+                        x.PartyPackage,
+                        x.Customer),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
@@ -43,7 +49,22 @@ namespace BirthdayParty.Services.Service
             if (id == string.Empty) throw new BadHttpRequestException("Order Detail Id is null or not exist");
 
             GetOrderDetailResponse response = await _unitOfWork.GetRepository<OrderDetail>().SingleOrDefaultAsync(
-                selector: x => new GetOrderDetailResponse(x.Id, x.CustomerId,x.Customer!, x.TotalPrice, x.Date, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetOrderDetailResponse(
+                        x.Id,
+                        x.PartyPackageId,
+                        x.CustomerId,
+                        x.ChildrenName,
+                        x.ChildrenBirthday,
+                        x.NumberOfChildren,
+                        x.TotalPrice,
+                        x.StartTime,
+                        x.EndTime,
+                        x.Date,
+                        x.CreatedAt,
+                        x.UpdatedAt,
+                        x.IsDeleted,
+                        x.PartyPackage,
+                        x.Customer),
                 predicate: x => x.Id.Equals(id));
 
             return response;
@@ -65,8 +86,7 @@ namespace BirthdayParty.Services.Service
 
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
 
-            return isSuccessful;    
-
+            return isSuccessful;
         }
 
         public async Task<GetOrderDetailResponse> CreateOrderDetail(CreateOrderDetailRequest createOrderDetailRequest)
@@ -77,11 +97,21 @@ namespace BirthdayParty.Services.Service
 
             if (customer == null) throw new BadHttpRequestException("Customer was not found");
 
+            // Check party package
+            var partyPackage = await _unitOfWork.GetRepository<PartyPackage>()
+                .SingleOrDefaultAsync(predicate: x => x.Id.Equals(createOrderDetailRequest.PartyPackageId));
+
+            if (partyPackage == null) throw new BadHttpRequestException("Party Package was not found");
+
             var entity = _mapper.Map<OrderDetail>(createOrderDetailRequest);
 
             //Hotfix id
             entity.Id = Guid.NewGuid().ToString();
 
+            // Calculate price
+            entity.TotalPrice = (long)(partyPackage.PackagePrice 
+                * Math.Ceiling((Decimal)(createOrderDetailRequest.EndTime!.Value.Hour - createOrderDetailRequest.StartTime!.Value.Hour)))!
+                + (long) (partyPackage.SeatPrice * createOrderDetailRequest.NumberOfChildren)!;
 
             await _unitOfWork.GetRepository<OrderDetail>().InsertAsync(entity);
             await _unitOfWork.CommitAsync();
