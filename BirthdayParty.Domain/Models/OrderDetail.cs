@@ -1,19 +1,24 @@
 ﻿using BirthdayParty.Domain.Validation.OrderDetailValidation;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BirthdayParty.Domain.Models;
 
 public partial class OrderDetail
 {
-    public string Id { get; set; }
-
+    public string? Id { get; set; }
+    public string? PartyPackageId { get; set; }
+    public string? CustomerId { get; set; }
+    public string? ChildrenName { get; set; }
+    public string? ChildrenBirthday { get; set; }
+    public int? NumberOfChildren { get; set; }
     public long? TotalPrice { get; set; }
 
-    [OrderDetailDate("Date must be after today.")]
-    public DateTime? Date { get; set; }
+    public DateTime? StartTime { get; set; }
 
-    public string? CustomerId { get; set; }
+    [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]
+    public DateTime? EndTime { get; set; }
+
+    public DateTime? Date { get; set; } = DateTime.UtcNow;
 
     public DateTime? CreatedAt { get; set; }
 
@@ -21,9 +26,13 @@ public partial class OrderDetail
 
     public bool? IsDeleted { get; set; }
 
+    [ForeignKey(nameof(PartyPackageId))]
+    public virtual PartyPackage? PartyPackage { get; set; }
+
+    [ForeignKey(nameof(CustomerId))]
     public virtual Customer? Customer { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
+    //public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
 
     public virtual ICollection<PaymentDetail> PaymentDetails { get; } = new List<PaymentDetail>();
 }
