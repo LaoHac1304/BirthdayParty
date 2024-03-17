@@ -9,7 +9,7 @@ namespace BirthdayParty.Domain.Payload.Response.Customers
 {
     public class GetCustomerResponse
     {
-        public GetCustomerResponse(string? id, string? fullName, DateTime? dayOfBirth, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, string? phoneNumber, string? email)
+        public GetCustomerResponse(string? id, string? fullName, DateTime? dayOfBirth, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, string? phoneNumber, string? email, string? imageUrl)
         {
             Id = id;
             FullName = fullName;
@@ -19,11 +19,13 @@ namespace BirthdayParty.Domain.Payload.Response.Customers
             IsDeleted = isDeleted;
             PhoneNumber = phoneNumber;
             Email = email;
+            ImageUrl = imageUrl;
             
         }
 
         public string Id { get; set; }
         public string? FullName { get; set; }
+        public string? ImageUrl { get; set; }
 
 
         public DateTime? DayOfBirth { get; set; }
