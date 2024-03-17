@@ -1,9 +1,13 @@
 ﻿using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.Payload.Request.Authentications;
+using BirthdayParty.Domain.Payload.Response.Customers;
+using BirthdayParty.Domain.Payload.Response.HostParties;
 using BirthdayParty.WebApi.Constants;
 using BirthdayParty.WebApi.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BirthdayParty.WebApi.Controllers
 {
@@ -12,10 +16,19 @@ namespace BirthdayParty.WebApi.Controllers
     public class AuthenticationController : BaseController<AuthenticationController>
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomerService _customerService;
+        private readonly IHostPartyService _hostPartyService;   
         public AuthenticationController(ILogger<AuthenticationController> logger
-            , IAuthenticationService authenticationService) : base(logger)
+            , IAuthenticationService authenticationService,
+              IHttpContextAccessor httpContextAccessor, ICustomerService customerService
+            , IHostPartyService hostPartyService) 
+            : base(logger)
         {
             _authenticationService = authenticationService;
+            _httpContextAccessor = httpContextAccessor;
+            _customerService = customerService;
+            _hostPartyService = hostPartyService;
         }
 
         [HttpPost(ApiEndPointConstant.Authentication.Login)]
@@ -34,6 +47,30 @@ namespace BirthdayParty.WebApi.Controllers
 
             return Ok(loginResponse);
 
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet(ApiEndPointConstant.Authentication.Info)]
+
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var currentUser = _httpContextAccessor.HttpContext.User;
+            if (currentUser is null) return Unauthorized("Email Or Role Invalid!!!");
+
+            var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = currentUser.FindFirst(ClaimTypes.Email)?.Value;
+            var role = currentUser.FindFirst(ClaimTypes.Role)?.Value;
+            if (role is null || userId is null || email is null) return Unauthorized("Email Or Role Invalid!!!");
+            if (role.Equals("customer"))
+            {
+                GetCustomerResponse customerResponse = await _customerService.GetCustomerByAccountId(userId);
+                return Ok(customerResponse);
+            }
+            if (role.Equals("host"))
+            {
+                GetHostPartyResponse hostResponse = await _hostPartyService.GetHostPartyByAccountId(userId);
+                return Ok(hostResponse);
+            }
+            return Unauthorized("Email Or Role Invalid!!!");
         }
     }
 }
