@@ -14,6 +14,7 @@
         {
             public const string AuthenticationEndpoint = ApiEndpoint + "/auth";
             public const string Login = AuthenticationEndpoint + "/login";
+            public const string Info = AuthenticationEndpoint + "/info";
         }
 
         public static class Account

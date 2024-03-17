@@ -20,6 +20,7 @@ try
 
     // Add services to the container.
     builder.Services.AddHttpClient();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: CorsConstant.PolicyName,

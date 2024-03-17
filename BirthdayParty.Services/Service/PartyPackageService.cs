@@ -5,6 +5,7 @@ using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.PartyPackages;
 using BirthdayParty.Domain.Payload.Request.Posts;
+using BirthdayParty.Domain.Payload.Response.HostParties;
 using BirthdayParty.Domain.Payload.Response.PartyPackages;
 using BirthdayParty.Domain.Payload.Response.Posts;
 using Microsoft.AspNetCore.Http;
@@ -223,7 +224,6 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     x.Discount,
                     x.HostParty
                 ));
-
             return result;
         }
         catch (Exception e)

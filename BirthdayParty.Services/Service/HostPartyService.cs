@@ -82,7 +82,7 @@ namespace BirthdayParty.Services.Service
                 = await _unitOfWork.GetRepository<HostParty>()
                 .GetPagingListAsync(
                     selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
-                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber),
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
@@ -108,8 +108,22 @@ namespace BirthdayParty.Services.Service
                 .GetRepository<HostParty>()
                 .SingleOrDefaultAsync(
                     selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
-                        , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber),
+                        , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     predicate: x => x.Id.Equals(id)
+                 );
+            if (hostPartyResponse == null) throw new BadHttpRequestException("host party is not found");
+            return hostPartyResponse;
+        }
+
+        public async Task<GetHostPartyResponse> GetHostPartyByAccountId(string accountId)
+        {
+
+            GetHostPartyResponse hostPartyResponse = await _unitOfWork
+                .GetRepository<HostParty>()
+                .SingleOrDefaultAsync(
+                    selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
+                        , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
+                    predicate: x => x.UserId.Equals(accountId)
                  );
             if (hostPartyResponse == null) throw new BadHttpRequestException("host party is not found");
             return hostPartyResponse;

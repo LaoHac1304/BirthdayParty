@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,13 @@ namespace BirthdayParty.Services.Service
                 CreateCustomerResponse createCustomerResponse = await RegisterCustomer(account);
                 account.Id = createCustomerResponse.Id;
                 jwtToken = JwtUtil.GenerateJwtToken(account, guidClaim);
+
+                return new LoginResponse
+                {
+                    Token = jwtToken,
+                    Account = account,
+                    RefreshToken = jwtToken
+                };
             }   
             else
             {
@@ -64,6 +72,7 @@ namespace BirthdayParty.Services.Service
             return new LoginResponse
             {
                 Token = jwtToken,
+                Account = existAccount,
                 RefreshToken = jwtToken
             };
         }

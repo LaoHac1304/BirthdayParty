@@ -1,9 +1,13 @@
 ﻿using BirthdayParty.Domain.Models;
 
+using BirthdayParty.Domain.Payload.Response.HostParties;
+
+
 namespace BirthdayParty.Domain.Payload.Response.PartyPackages;
 
 public class GetSinglePartyPackageResponse
 {
+
     public GetSinglePartyPackageResponse(string id, string? hostPartyId, string? discountId, string? name, string? description, string? location, int roomSeats, string? roomUrl, string? imageUrl, int? packagePrice, int? seatPrice, string? startTime, string? endTime, string? status, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, Discount? discount, HostParty? hostParty)
     {
         Id = id;
@@ -58,4 +62,5 @@ public class GetSinglePartyPackageResponse
     public virtual Discount? Discount { get; set; }
 
     public virtual HostParty? HostParty { get; set; }
+
 }
