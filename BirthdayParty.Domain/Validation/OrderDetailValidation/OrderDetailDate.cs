@@ -10,15 +10,25 @@ namespace BirthdayParty.Domain.Validation.OrderDetailValidation
 {
     public class OrderDetailDate : ValidationAttribute
     {
-        public OrderDetailDate(string errorMessage)
+        private readonly string _startDate;
+        public OrderDetailDate(string startDate, string errorMessage)
         {
             ErrorMessage = errorMessage;
+            _startDate = startDate;
         }
 
-        public override bool IsValid(object value)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            DateTime time = (DateTime)value;
-            return time.Date >= DateTime.UtcNow.Date;
+            var startDateProperty = validationContext.ObjectType.GetProperty(_startDate);
+            if (startDateProperty == null) { return new ValidationResult($"Unknown property: {_startDate}"); }
+
+            var startDate = startDateProperty.GetValue(validationContext.ObjectInstance, null);
+            var endDateValue = (DateTime)value;
+
+            if (endDateValue < (DateTime)startDate!)
+                return new ValidationResult(ErrorMessage);
+
+            return ValidationResult.Success!;
         }
     }
 }
