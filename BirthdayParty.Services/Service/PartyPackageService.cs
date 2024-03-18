@@ -17,6 +17,7 @@ namespace BirthdayParty.Services.Service;
 public class PartyPackageService : BaseService<PartyPackageService>, IPartyPackageService
 {
     private readonly IPostService _postService;
+
     public PartyPackageService(IUnitOfWork unitOfWork, ILogger<PartyPackageService> logger, IMapper mapper,
         IPostService postService,
         IHttpContextAccessor httpContextAccessor) : base(unitOfWork, logger, mapper, httpContextAccessor)
@@ -28,7 +29,6 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
     {
         try
         {
-
             return await _postService.CreatePost(request);
         }
         catch (Exception e)
@@ -68,29 +68,32 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
         {
             var result = _unitOfWork.GetRepository<PartyPackage>().GetPagingListAsync<GetPartyPackagesResponse>(
                 selector: x => new GetPartyPackagesResponse
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    CreatedAt = x.CreatedAt,
-                    UpdatedAt = x.UpdatedAt,
-                    Location = x.Location,
-                    Price = x.Price,
-                    HostPartyId = x.HostPartyId,
-                    DiscountPercent = x.Discount!.DiscountPercent,
-                    DiscountStatus = x.Discount!.Status,
-                    Status = x.Status,
-                    AvailableDates = x.AvailableDates,
-                    ImageUrl = x.ImageUrl,
-                    IsDeleted = x.IsDeleted,
-                    AvailableForPreorder = x.AvailableForPreorder
-                },
+                (
+                    x.Id,
+                    x.HostPartyId,
+                    x.DiscountId,
+                    x.Name,
+                    x.Description,
+                    x.Location,
+                    x.RoomSeats,
+                    x.RoomUrl,
+                    x.ImageUrl,
+                    x.PackagePrice,
+                    x.SeatPrice,
+                    x.StartTime,
+                    x.EndTime,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted,
+                    x.Discount,
+                    x.HostParty
+                ),
                 predicate: null!,
                 orderBy: x => x.OrderBy(partyPackage => partyPackage.CreatedAt),
-                include: x => x.Include(partyPackage => partyPackage.Discount)!,
+                //include: x => x.Include(partyPackage => partyPackage.Discount)!,
                 page: request.Page,
                 size: request.Size);
-
 
             return result;
         }
@@ -107,18 +110,19 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
             var toBeAdded = new PartyPackage()
             {
                 Id = Guid.NewGuid().ToString(),
+                HostPartyId = request.HostPartyId,
+                DiscountId = request.DiscountId,
                 Name = request.Name,
                 Description = request.Description,
                 Location = request.Location,
-                Price = request.Price,
-                HostPartyId = request.HostPartyId,
-                AvailableDates = request.AvailableDates,
+                RoomSeats = request.RoomSeats,
+                RoomUrl = request.RoomUrl,
                 ImageUrl = request.ImageUrl,
-                DiscountId = request.DiscountId,
-                AvailableForPreorder = request.AvailableForPreorder,
-                Status = request.Status,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                PackagePrice = request.PackagePrice,
+                SeatPrice = request.SeatPrice,
+                StartTime = request.StartTime,
+                EndTime = request.EndTime,
+                Status = "Inactive"
             };
 
             await _unitOfWork.GetRepository<PartyPackage>().InsertAsync(toBeAdded);
@@ -142,20 +146,22 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
 
             if (toBeUpdated == null) return "Not found";
 
+            toBeUpdated.DiscountId = request.DiscountId;
             toBeUpdated.Name = !string.IsNullOrEmpty(request.Name) ? request.Name : toBeUpdated.Name;
             toBeUpdated.Description = !string.IsNullOrEmpty(request.Description)
                 ? request.Description
                 : toBeUpdated.Description;
-            toBeUpdated.Location = !string.IsNullOrEmpty(request.Location) ? request.Location : toBeUpdated.Location;
-            toBeUpdated.Price = request.Price ?? toBeUpdated.Price;
-            toBeUpdated.HostPartyId = !string.IsNullOrEmpty(request.HostPartyId)
-                ? request.HostPartyId
-                : toBeUpdated.HostPartyId;
-            toBeUpdated.AvailableDates = request.AvailableDates ?? toBeUpdated.AvailableDates;
-            toBeUpdated.DiscountId = request.DiscountId;
+            toBeUpdated.Location = !string.IsNullOrEmpty(request.Location)
+                ? request.Location
+                : toBeUpdated.Location;
+            toBeUpdated.RoomSeats = toBeUpdated.RoomSeats;
+            toBeUpdated.RoomUrl = !string.IsNullOrEmpty(request.RoomUrl) ? request.RoomUrl : toBeUpdated.RoomUrl;
             toBeUpdated.ImageUrl = !string.IsNullOrEmpty(request.ImageUrl) ? request.ImageUrl : toBeUpdated.ImageUrl;
-            toBeUpdated.AvailableForPreorder = request.AvailableForPreorder ?? toBeUpdated.AvailableForPreorder;
-
+            toBeUpdated.PackagePrice = request.PackagePrice;
+            toBeUpdated.SeatPrice = request.SeatPrice;
+            toBeUpdated.StartTime = !string.IsNullOrEmpty(request.StartTime) ? request.StartTime : toBeUpdated.StartTime;
+            toBeUpdated.EndTime = !string.IsNullOrEmpty(request.EndTime) ? request.EndTime : toBeUpdated.EndTime;
+            toBeUpdated.Status = !string.IsNullOrEmpty(request.Status) ? request.Status : toBeUpdated.Status;
             toBeUpdated.UpdatedAt = DateTime.Now;
 
             _unitOfWork.GetRepository<PartyPackage>().UpdateAsync(toBeUpdated);
@@ -176,9 +182,9 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
         {
             var toBeDeleted = await _unitOfWork.GetRepository<PartyPackage>()
                 .SingleOrDefaultAsync(predicate: x => x.Id == id);
-            
+
             if (toBeDeleted == null) return "Not found";
-            
+
             _unitOfWork.GetRepository<PartyPackage>().DeleteAsync(toBeDeleted);
             await _unitOfWork.CommitAsync();
 
@@ -197,23 +203,27 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
         {
             var result = _unitOfWork.GetRepository<PartyPackage>().SingleOrDefaultAsync<GetSinglePartyPackageResponse>(
                 predicate: x => x.Id == id, selector: x => new GetSinglePartyPackageResponse
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Location = x.Location,
-                    Price = x.Price,
-                    HostPartyId = x.HostPartyId,
-                    DiscountPercent = x.Discount!.DiscountPercent,
-                    DiscountStatus = x.Discount!.Status,
-                    Status = x.Status,
-                    AvailableDates = x.AvailableDates,
-                    ImageUrl = x.ImageUrl,
-                    IsDeleted = x.IsDeleted,
-                    AvailableForPreorder = x.AvailableForPreorder,
-                    HostParty = _mapper.Map<GetHostPartyResponse>(x.HostParty),
-                });
-            
+                (
+                    x.Id,
+                    x.HostPartyId,
+                    x.DiscountId,
+                    x.Name,
+                    x.Description,
+                    x.Location,
+                    x.RoomSeats,
+                    x.RoomUrl,
+                    x.ImageUrl,
+                    x.PackagePrice,
+                    x.SeatPrice,
+                    x.StartTime,
+                    x.EndTime,
+                    x.Status,
+                    x.CreatedAt,
+                    x.UpdatedAt,
+                    x.IsDeleted,
+                    x.Discount,
+                    x.HostParty
+                ));
             return result;
         }
         catch (Exception e)

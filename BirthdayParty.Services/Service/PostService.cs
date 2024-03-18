@@ -130,7 +130,7 @@ public class PostService : BaseService<PostService>, IPostService
     {
         try
         {
-            string imageUrl = await _uploadFileService.UploadFile(request.ImageUrl);
+            string imageUrl = await _uploadFileService.UploadFile(request.ImageUrl!);
 
             var toBeAdded = new Post()
             {

@@ -6,11 +6,17 @@ namespace BirthdayParty.Domain.Payload.Request.OrderDetails
     public class CreateOrderDetailRequest
     {
         [Required]
+        public string? PartyPackageId { get; set; }
+
+        [Required]
         public string? CustomerId { get; set; }
-        [Required]
-        public long? TotalPrice { get; set; }
-        [Required]
-        [OrderDetailDate("Date must be after today.")]
-        public DateTime? Date { get; set; }
+
+        public string? ChildrenName { get; set; }
+        public string? ChildrenBirthday { get; set; }
+        public int? NumberOfChildren { get; set; }
+        public DateTime? StartTime { get; set; }
+
+        [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]
+        public DateTime? EndTime { get; set; }
     }
 }
