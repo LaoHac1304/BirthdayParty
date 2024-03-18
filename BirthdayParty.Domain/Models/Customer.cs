@@ -22,7 +22,7 @@ public partial class Customer
 
     public bool? IsDeleted { get; set; }
 
-    //public virtual ICollection<OrderDetail> OrderDetails { get; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail> OrderDetails { get; } = new List<OrderDetail>();
 
     public virtual Account? User { get; set; }
 }
