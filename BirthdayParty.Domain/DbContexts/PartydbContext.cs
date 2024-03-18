@@ -320,7 +320,7 @@ public partial class PartydbContext : DbContext
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK__order_det__custo__76969D2E");
             entity.HasOne(d => d.PartyPackage).WithMany(p => p.OrderDetails)
-                .HasForeignKey(d => d.CustomerId)
+                .HasForeignKey(d => d.PartyPackageId)
                 .HasConstraintName("order_detail_party_package_FK");
         });
 
