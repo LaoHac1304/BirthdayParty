@@ -37,7 +37,8 @@ namespace BirthdayParty.Services.Service
                         x.UpdatedAt,
                         x.IsDeleted,
                         x.PartyPackage,
-                        x.Customer),
+                        x.Customer,
+                        x.Gender),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
@@ -64,7 +65,8 @@ namespace BirthdayParty.Services.Service
                         x.UpdatedAt,
                         x.IsDeleted,
                         x.PartyPackage,
-                        x.Customer),
+                        x.Customer,
+                        x.Gender),
                 predicate: x => x.Id.Equals(id));
 
             return response;
