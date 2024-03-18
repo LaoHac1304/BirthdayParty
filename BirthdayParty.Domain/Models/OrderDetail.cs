@@ -13,10 +13,11 @@ public partial class OrderDetail
     public int? NumberOfChildren { get; set; }
     public long? TotalPrice { get; set; }
 
-    public DateTime? StartTime { get; set; }
+    public string? StartTime { get; set; }
 
     [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]
-    public DateTime? EndTime { get; set; }
+    public string? EndTime { get; set; }
+    public string? Gender { get; set; }
 
     public DateTime? Date { get; set; } = DateTime.UtcNow;
 

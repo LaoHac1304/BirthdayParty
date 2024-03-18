@@ -284,6 +284,9 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.ChildrenName)
                 .HasMaxLength(40)
                 .HasColumnName("children_name");
+            entity.Property(e => e.Gender)
+                .HasMaxLength(20)
+                .HasColumnName("gender");
             entity.Property(e => e.ChildrenBirthday)
                 .HasMaxLength(6)
                 .HasColumnName("children_birthday");
@@ -300,9 +303,11 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("date");
             entity.Property(e => e.StartTime)
-               .HasColumnName("start_time");
+                .HasMaxLength(30)
+                .HasColumnName("start_time");
             entity.Property(e => e.EndTime)
-               .HasColumnName("end_time");
+                .HasMaxLength(30)
+                .HasColumnName("end_time");
             entity.Property(e => e.IsDeleted)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("is_deleted");
@@ -409,10 +414,10 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.SeatPrice).HasColumnName("seat_price");
             entity.Property(e => e.PackagePrice).HasColumnName("package_price");
             entity.Property(e => e.StartTime)
-                .HasMaxLength(6)
+                .HasMaxLength(30)
                 .HasColumnName("start_time");
             entity.Property(e => e.EndTime)
-                .HasMaxLength(6)
+                .HasMaxLength(30)
                 .HasColumnName("end_time");
             entity.Property(e => e.RoomUrl)
                 .HasMaxLength(255)
