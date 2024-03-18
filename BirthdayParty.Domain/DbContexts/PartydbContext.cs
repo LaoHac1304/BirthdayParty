@@ -281,12 +281,28 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("created_at");
+            entity.Property(e => e.ChildrenName)
+                .HasMaxLength(40)
+                .HasColumnName("children_name");
+            entity.Property(e => e.ChildrenBirthday)
+                .HasMaxLength(6)
+                .HasColumnName("children_birthday");
+            entity.Property(e => e.NumberOfChildren)
+                .HasMaxLength(6)
+                .HasColumnName("number_of_children");
             entity.Property(e => e.CustomerId)
                 .HasMaxLength(64)
                 .HasColumnName("customer_id");
+            entity.Property(e => e.PartyPackageId)
+                .HasMaxLength(64)
+                .HasColumnName("party_package_id");
             entity.Property(e => e.Date)
                 .HasMaxLength(6)
                 .HasColumnName("date");
+            entity.Property(e => e.StartTime)
+               .HasColumnName("start_time");
+            entity.Property(e => e.EndTime)
+               .HasColumnName("end_time");
             entity.Property(e => e.IsDeleted)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("is_deleted");
@@ -295,9 +311,12 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
 
-            //entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
-            //    .HasForeignKey(d => d.CustomerId)
-            //    .HasConstraintName("FK__order_det__custo__76969D2E");
+            entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK__order_det__custo__76969D2E");
+            entity.HasOne(d => d.PartyPackage).WithMany(p => p.OrderDetails)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("order_detail_party_package_FK");
         });
 
         /*//modelBuilder.Entity<OrderItem>(entity =>

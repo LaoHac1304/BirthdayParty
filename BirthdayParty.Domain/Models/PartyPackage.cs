@@ -39,4 +39,5 @@ public partial class PartyPackage
     public virtual ICollection<RoomOnDuty> RoomOnDuties { get; } = new List<RoomOnDuty>();
 
     public virtual ICollection<Post> Posts { get; } = new List<Post>();
+    public virtual ICollection<OrderDetail> OrderDetails { get; } = new List<OrderDetail>();
 }
