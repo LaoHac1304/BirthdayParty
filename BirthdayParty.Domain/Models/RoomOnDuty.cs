@@ -8,9 +8,9 @@ namespace BirthdayParty.Domain.Models
         public string? PartyPackageId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public bool Status { get; set; } = false;
-
-        [ForeignKey(nameof(PartyPackageId))]
-        public PartyPackage? PartyPackage { get; set; }
+        public string? Status { get; set; }
+        public virtual PartyPackage? PartyPackage { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

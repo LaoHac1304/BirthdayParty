@@ -36,7 +36,7 @@ public partial class PartyPackage
 
     public virtual ICollection<Menu> Menus { get; } = new List<Menu>();
 
-    public virtual ICollection<RoomOnDuty> OrderItems { get; } = new List<RoomOnDuty>();
+    public virtual ICollection<RoomOnDuty> RoomOnDuties { get; } = new List<RoomOnDuty>();
 
     public virtual ICollection<Post> Posts { get; } = new List<Post>();
 }
