@@ -1,6 +1,6 @@
 ﻿namespace BirthdayParty.Domain.Payload.Request.Posts;
 
-public class UpdatePostRequest
+public class UpdateMenuRequest
 {
    public string? Content { get; set; }
    public string? ImageUrl { get; set; }

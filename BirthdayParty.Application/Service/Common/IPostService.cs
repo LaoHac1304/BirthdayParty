@@ -8,7 +8,7 @@ public interface IPostService
 {
     Task<GetSinglePostResponse> GetPost(string id);
     Task<IPaginate<GetPostsResponse>> GetPosts(GetPostsRequest request);
-    Task<string> UpdatePost(string id, UpdatePostRequest request);
+    Task<string> UpdatePost(string id, UpdateMenuRequest request);
     Task<string> RemovePost(string id);
     Task<string> CreatePost(CreatePostRequest request);
 }

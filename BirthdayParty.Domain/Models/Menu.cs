@@ -9,6 +9,7 @@ public partial class Menu
 
     public string? Name { get; set; }
 
+    public long? Price { get; set; }
     public string? Description { get; set; }
 
     public string? PartyPackageId { get; set; }
