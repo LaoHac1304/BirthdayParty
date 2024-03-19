@@ -124,5 +124,35 @@ namespace BirthdayParty.Services.Service
 
             return data;
         }
+
+        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetailsByCustomerId(string id, int page, int size)
+        {
+            IPaginate<GetOrderDetailResponse> response
+                = await _unitOfWork.GetRepository<OrderDetail>()
+                .GetPagingListAsync(
+
+                    selector: x => new GetOrderDetailResponse(
+                        x.Id,
+                        x.PartyPackageId,
+                        x.CustomerId,
+                        x.ChildrenName,
+                        x.ChildrenBirthday,
+                        x.NumberOfChildren,
+                        x.TotalPrice,
+                        x.StartTime,
+                        x.EndTime,
+                        x.Date,
+                        x.CreatedAt,
+                        x.UpdatedAt,
+                        x.IsDeleted,
+                        x.PartyPackage,
+                        x.Customer,
+                        x.Gender),
+                    page: page,
+                    size: size,
+                    predicate: x => x.CustomerId.Equals(id),
+                    orderBy: x => x.OrderBy(x => x.CreatedAt)) ;
+            return response;
+        }
     }
 }
