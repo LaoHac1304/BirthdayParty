@@ -11,8 +11,6 @@ public partial class Menu
 
     public string? Description { get; set; }
 
-    public long? Price { get; set; }
-
     public string? PartyPackageId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
