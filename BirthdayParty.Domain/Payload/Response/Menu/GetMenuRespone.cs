@@ -8,12 +8,12 @@ namespace BirthdayParty.Domain.Payload.Response.Menus
 {
     public class GetMenuResponse
     {
-        public GetMenuResponse(string id, string? name, string? description, long? price, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted)
+        public GetMenuResponse(string id, string? name, string? description
+            , DateTime? createdAt, DateTime? updatedAt, bool? isDeleted)
         {
             Id = id;
             Name = name;
             Description = description;
-            Price = price;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             IsDeleted = isDeleted;
@@ -24,8 +24,6 @@ namespace BirthdayParty.Domain.Payload.Response.Menus
         public string? Name { get; set; }
 
         public string? Description { get; set; }
-
-        public long? Price { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
