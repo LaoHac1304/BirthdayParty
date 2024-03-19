@@ -21,7 +21,7 @@ namespace BirthdayParty.WebApi.Controllers
             _accountService = accountService;
         }
 
-        [CustomAuthorize(RoleEnum.admin)]
+        //[CustomAuthorize(RoleEnum.admin)]
         [HttpGet(ApiEndPointConstant.Account.AccountsEndpoint)]
         public async Task<IActionResult> GetAccounts([FromQuery] int page, [FromQuery] int size)
         {

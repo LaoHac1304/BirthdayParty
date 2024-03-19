@@ -89,7 +89,17 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     x.Discount,
                     x.HostParty
                 ),
-                predicate: null!,
+                predicate: x => request.IsDeleted.ToLower().Equals("both") 
+                            || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)
+                            && x.HostPartyId.Contains(request.HostPartyId)
+                            && x.Name.Contains(request.SearchString ?? ""),
+                            //&& x.Description.Contains(request.SearchString ?? "")
+                            //&& x.Location.Contains(request.SearchString ?? "")
+                            //&& x.StartTime.Contains(request.SearchString ?? "")
+                            //&& x.EndTime.Contains(request.SearchString ?? "")
+                            //&& x.RoomSeats.ToString().Contains(request.SearchString ?? "")
+                            //&& x.SeatPrice.ToString().Contains(request.SearchString ?? "")
+                            //&& x.PackagePrice.ToString().Contains(request.SearchString ?? ""),
                 orderBy: x => x.OrderBy(partyPackage => partyPackage.CreatedAt),
                 //include: x => x.Include(partyPackage => partyPackage.Discount)!,
                 page: request.Page,
@@ -129,6 +139,7 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
             await _unitOfWork.CommitAsync();
 
             var message = "Created Successfully";
+
             return message;
         }
         catch (Exception e)
