@@ -329,6 +329,8 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
+            entity.Property(e => e.Status).HasColumnName("status").HasDefaultValue("'PENDING'");
+
 
             entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.CustomerId)

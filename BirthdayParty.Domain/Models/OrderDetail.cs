@@ -26,6 +26,7 @@ public partial class OrderDetail
     public DateTime? UpdatedAt { get; set; }
 
     public bool? IsDeleted { get; set; }
+    public string? Status { get; set; } = "PENDING";
 
     [ForeignKey(nameof(PartyPackageId))]
     public virtual PartyPackage? PartyPackage { get; set; }
