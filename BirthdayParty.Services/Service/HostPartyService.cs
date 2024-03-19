@@ -23,6 +23,7 @@ namespace BirthdayParty.Services.Service
     {
         private readonly IAccountService _accountService;
         private readonly IAuthenticationService _authenticationService;
+
         public HostPartyService(IUnitOfWork unitOfWork, ILogger<AccountService> logger
             , IMapper mapper, IHttpContextAccessor httpContextAccessor
             , IAccountService accountService, IAuthenticationService authenticationService)
@@ -42,15 +43,35 @@ namespace BirthdayParty.Services.Service
             if (existAccount is null)
             {
                 Account account = await _authenticationService.CreateAccount(createHostPartyRequest.Email, "host");
-                string id = await RegisterHostParty(account, createHostPartyRequest);
-                account.Id = id;
+                // string id = await RegisterHostParty(account, createHostPartyRequest);
+                // account.Id = id;
+                //register host party
+
+                HostParty hostParty = new HostParty()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = account.Id,
+                    Description = createHostPartyRequest.Description,
+                    Rating = createHostPartyRequest.Rating,
+                    PhoneNumber = createHostPartyRequest.PhoneNumber
+                };
+                await _unitOfWork.GetRepository<HostParty>().InsertAsync(hostParty);
+                bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
+                if (isSuccessful == false)
+                {
+                    return null;
+                }
+
+                return hostParty.Id;
             }
             else
             {
                 if (existAccount.IsDeleted == true) return null;
             }
-            HostParty hostParty = _mapper.Map<HostParty>(createHostPartyRequest);
-            return hostParty.Id;
+
+            return "Create Failed";
+            // HostParty hostParty = _mapper.Map<HostParty>(createHostPartyRequest);
+            // return hostParty.Id;
         }
 
         private async Task<string>
@@ -61,7 +82,6 @@ namespace BirthdayParty.Services.Service
                 {
                     Email = account.Email,
                     FullName = account.Email.Split('@')[0],
-
                 };
             CreateAccountResponse createAccountResponse = await _accountService.createAccount(createAccountRequest);
             HostParty hostParty = new HostParty()
@@ -72,7 +92,11 @@ namespace BirthdayParty.Services.Service
             };
             await _unitOfWork.GetRepository<HostParty>().InsertAsync(hostParty);
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
-            if (isSuccessful == false) { return null; }
+            if (isSuccessful == false)
+            {
+                return null;
+            }
+
             return hostParty.Id;
         }
 
@@ -80,12 +104,12 @@ namespace BirthdayParty.Services.Service
         {
             IPaginate<GetHostPartyResponse> accountsResponse
                 = await _unitOfWork.GetRepository<HostParty>()
-                .GetPagingListAsync(
-                    selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
-                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
-                    page: page,
-                    size: size,
-                    orderBy: x => x.OrderBy(x => x.CreatedAt));
+                    .GetPagingListAsync(
+                        selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
+                            , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
+                        page: page,
+                        size: size,
+                        orderBy: x => x.OrderBy(x => x.CreatedAt));
             return accountsResponse;
         }
 
@@ -110,21 +134,20 @@ namespace BirthdayParty.Services.Service
                     selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
                         , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     predicate: x => x.Id.Equals(id)
-                 );
+                );
             if (hostPartyResponse == null) throw new BadHttpRequestException("host party is not found");
             return hostPartyResponse;
         }
 
         public async Task<GetHostPartyResponse> GetHostPartyByAccountId(string accountId)
         {
-
             GetHostPartyResponse hostPartyResponse = await _unitOfWork
                 .GetRepository<HostParty>()
                 .SingleOrDefaultAsync(
                     selector: x => new GetHostPartyResponse(x.Id, x.Description, x.Rating
                         , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email),
                     predicate: x => x.UserId.Equals(accountId)
-                 );
+                );
             if (hostPartyResponse == null) throw new BadHttpRequestException("host party is not found");
             return hostPartyResponse;
         }
