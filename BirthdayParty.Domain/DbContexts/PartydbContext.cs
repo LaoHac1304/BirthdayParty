@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BirthdayParty.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BirthdayParty.Domain.DbContexts;
 
@@ -42,8 +43,22 @@ public partial class PartydbContext : DbContext
     public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("server=database-1.c7cae8e8mcxf.ap-southeast-2.rds.amazonaws.com;uid=admin;pwd=7LwPyzbw4KfMBu6;database=partydb");
+        //optionsBuilder.UseMySQL("server=database-1.c7cae8e8mcxf.ap-southeast-2.rds.amazonaws.com;uid=admin;pwd=7LwPyzbw4KfMBu6;database=partydb");
+        optionsBuilder.UseMySQL(GetConnectionString());
+
     }
+
+    private string GetConnectionString()
+    {
+        IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", true, true)
+            .Build();
+        var strConn = config["ConnectionStrings:PartyDB"];
+        return strConn;
+    }
+
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -210,7 +225,6 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.PartyPackageId)
                 .HasMaxLength(64)
                 .HasColumnName("party_package_id");
-            entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.UpdatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
@@ -284,6 +298,9 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.ChildrenName)
                 .HasMaxLength(40)
                 .HasColumnName("children_name");
+            entity.Property(e => e.Gender)
+                .HasMaxLength(20)
+                .HasColumnName("gender");
             entity.Property(e => e.ChildrenBirthday)
                 .HasMaxLength(6)
                 .HasColumnName("children_birthday");
@@ -300,9 +317,11 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("date");
             entity.Property(e => e.StartTime)
-               .HasColumnName("start_time");
+                .HasMaxLength(30)
+                .HasColumnName("start_time");
             entity.Property(e => e.EndTime)
-               .HasColumnName("end_time");
+                .HasMaxLength(30)
+                .HasColumnName("end_time");
             entity.Property(e => e.IsDeleted)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("is_deleted");
@@ -310,6 +329,8 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
+            entity.Property(e => e.Status).HasColumnName("status").HasDefaultValue("'PENDING'");
+
 
             entity.HasOne(d => d.Customer).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.CustomerId)
@@ -409,10 +430,10 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.SeatPrice).HasColumnName("seat_price");
             entity.Property(e => e.PackagePrice).HasColumnName("package_price");
             entity.Property(e => e.StartTime)
-                .HasMaxLength(6)
+                .HasMaxLength(30)
                 .HasColumnName("start_time");
             entity.Property(e => e.EndTime)
-                .HasMaxLength(6)
+                .HasMaxLength(30)
                 .HasColumnName("end_time");
             entity.Property(e => e.RoomUrl)
                 .HasMaxLength(255)

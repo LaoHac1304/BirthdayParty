@@ -34,7 +34,7 @@ namespace BirthdayParty.WebApi.Controllers
         [HttpPost(ApiEndPointConstant.HostParty.HostPartiesEndpoint)]
         public async Task<IActionResult> CreateHostParty([FromBody] CreateHostPartyRequest createHostPartyRequest)
         {
-            var hostPartyId = _hostPartyService.CreateHostParty(createHostPartyRequest);
+            var hostPartyId = await _hostPartyService.CreateHostParty(createHostPartyRequest);
             return Ok(hostPartyId);
         }
 

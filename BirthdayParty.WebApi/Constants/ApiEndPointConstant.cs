@@ -27,6 +27,7 @@
         {
             public const string OrderDetailsEndpoint = ApiEndpoint + "/orderdetails";
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
+            public const string OwnOrderDetailsEndpoint = ApiEndpoint + "/orderdetails/me";
         }
 
 
