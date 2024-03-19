@@ -19,5 +19,6 @@ namespace BirthdayParty.Application.Service.Common
 
         Task<bool> UpdateMenuById(string id);
         Task<GetMenuResponse> CreateMenu(CreateMenuRequest createMenuRequest);
+        Task<IPaginate<GetMenuResponse>> GetMenusByPackageId(string id, int page, int size);
     }
 }

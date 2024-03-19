@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace BirthdayParty.Services.Service
         public async Task<GetMenuResponse> CreateMenu(CreateMenuRequest createMenuRequest)
         {
             Menu menu = _mapper.Map<Menu>(createMenuRequest);
+            menu.Id = Guid.NewGuid().ToString();
             menu.CreatedAt = DateTime.UtcNow;
 
             await _unitOfWork.GetRepository<Menu>().InsertAsync(menu);
@@ -40,8 +42,24 @@ namespace BirthdayParty.Services.Service
             if (id == string.Empty) throw new BadHttpRequestException("Menu Id is null or not exist");
 
             GetMenuResponse response = await _unitOfWork.GetRepository<Menu>().SingleOrDefaultAsync(
-                selector: x => new GetMenuResponse(x.Id, x.Name, x.Description, x.Price, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                selector: x => new GetMenuResponse(x.Id, x.Name, x.Description, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
                 predicate: x => x.Id.Equals(id));
+
+            return response;
+        }
+
+        public async Task<IPaginate<GetMenuResponse>> GetMenusByPackageId(string id, int page, int size)
+        {
+            if (id == string.Empty) throw new BadHttpRequestException("Menu Id is null or not exist");
+
+            IPaginate<GetMenuResponse> response
+                = await _unitOfWork.GetRepository<Menu>()
+                .GetPagingListAsync(
+                    selector: x => new GetMenuResponse(x.Id, x.Name, x.Description, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                    page: page,
+                    predicate: x => x.PartyPackageId!.Equals(id),
+                    size: size,
+                    orderBy: x => x.OrderBy(x => x.CreatedAt));
 
             return response;
         }
@@ -51,7 +69,7 @@ namespace BirthdayParty.Services.Service
             IPaginate<GetMenuResponse> response
                 = await _unitOfWork.GetRepository<Menu>()
                 .GetPagingListAsync(
-                    selector: x => new GetMenuResponse(x.Id, x.Name, x.Description, x.Price, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
+                    selector: x => new GetMenuResponse(x.Id, x.Name, x.Description, x.CreatedAt, x.UpdatedAt, x.IsDeleted),
                     page: page,
                     size: size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));

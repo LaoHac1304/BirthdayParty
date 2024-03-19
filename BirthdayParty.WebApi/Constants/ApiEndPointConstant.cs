@@ -70,6 +70,7 @@
         {
             public const string MenusEndpoint = ApiEndpoint + "/menu";
             public const string MenuEndpoint = MenusEndpoint + "/{id}";
+            public const string MenuByPackageEndpoint = MenusEndpoint + "/{packageId}/package";
         }
 
         public static class Customer
