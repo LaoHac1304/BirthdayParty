@@ -89,9 +89,9 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     x.Discount,
                     x.HostParty
                 ),
-                predicate: x => request.IsDeleted.ToLower().Equals("both") 
-                            || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)
-                            && x.HostPartyId.Contains(request.HostPartyId)
+                predicate: x =>
+                    (request.IsDeleted.ToLower().Equals("both") || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)) &&
+                            (x.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
                             && x.Name.Contains(request.SearchString ?? ""),
                             //&& x.Description.Contains(request.SearchString ?? "")
                             //&& x.Location.Contains(request.SearchString ?? "")
