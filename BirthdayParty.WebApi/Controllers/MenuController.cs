@@ -25,6 +25,13 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(menu);
         }
 
+        [HttpGet(ApiEndPointConstant.Menu.MenuByPackageEndpoint)]
+        public async Task<IActionResult> GetByPackageId(string packageId, [FromQuery] int page, [FromQuery] int size)
+        {
+            var menu = await menuService.GetMenusByPackageId(packageId, page, size);
+            return Ok(menu);
+        }
+
 
         [HttpPost(ApiEndPointConstant.Menu.MenusEndpoint)]
         public async Task<IActionResult> Post([FromBody] CreateMenuRequest createMenuRequest)
