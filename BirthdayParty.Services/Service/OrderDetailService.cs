@@ -39,9 +39,9 @@ namespace BirthdayParty.Services.Service
                         x.Customer,
                         x.Gender,
                         x.Status),
-                    predicate: x => request.IsDeleted.ToLower().Equals("both")
-                            || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)
-                            && x.PartyPackage.HostPartyId.Contains(request.HostPartyId)
+                    predicate: x => (request.IsDeleted.ToLower().Equals("both")
+                            || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted))
+                            && (x.PartyPackage.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
                             && x.CustomerId.Contains(request.CustomerId),
                             //&& x.Date.Contains(request.SearchString ?? ""),
                     page: request.Page,

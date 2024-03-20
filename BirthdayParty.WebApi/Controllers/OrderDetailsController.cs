@@ -6,7 +6,9 @@ using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Request.Accounts;
 using System.Security.Claims;
 using BirthdayParty.Application.Service.Common;
+using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Response.Customers;
+using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using BirthdayParty.WebApi.Enums;
 using BirthdayParty.WebApi.Validators;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,7 +33,7 @@ namespace BirthdayParty.WebApi.Controllers
 
         // GET: api/<OrderDetailsController>
         [HttpGet(ApiEndPointConstant.OrderDetail.OrderDetailsEndpoint)]
-        public async Task<IActionResult> GetOrderDetails([FromQuery] GetOrderDetailsRequest request)
+        public async Task<ActionResult<IPaginate<GetOrderDetailResponse>>> GetOrderDetails([FromQuery] GetOrderDetailsRequest request)
         { 
             var orderDetail = await orderDetailsService.GetOrderDetails(request);
             return Ok(orderDetail);
