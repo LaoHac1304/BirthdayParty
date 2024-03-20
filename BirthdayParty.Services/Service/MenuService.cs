@@ -5,7 +5,6 @@ using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.Discounts;
 using BirthdayParty.Domain.Payload.Request.Menu;
-using BirthdayParty.Domain.Payload.Request.Menus;
 using BirthdayParty.Domain.Payload.Response.Discounts;
 using BirthdayParty.Domain.Payload.Response.Menus;
 using Microsoft.AspNetCore.Http;

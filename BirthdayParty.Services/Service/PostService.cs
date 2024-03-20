@@ -76,7 +76,7 @@ public class PostService : BaseService<PostService>, IPostService
         }
     }
 
-    public async Task<string> UpdatePost(string id, UpdateMenuRequest request)
+    public async Task<string> UpdatePost(string id, UpdatePostRequest request)
     {
         try
         {

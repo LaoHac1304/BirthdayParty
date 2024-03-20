@@ -21,7 +21,7 @@ public class PostController : BaseController<PostController>
 
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Post>> Put([FromRoute] string id, [FromBody] UpdateMenuRequest request)
+    public async Task<ActionResult<Post>> Put([FromRoute] string id, [FromBody] UpdatePostRequest request)
     {
         string result = await _postService.UpdatePost(id, request);
         return Ok(result);
