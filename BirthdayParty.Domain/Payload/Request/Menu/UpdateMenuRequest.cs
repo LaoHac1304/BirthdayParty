@@ -6,5 +6,4 @@ public class UpdateMenuRequest
 
     public string? Description { get; set; }
 
-    public long? Price { get; set; }
 }
