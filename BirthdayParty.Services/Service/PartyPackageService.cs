@@ -64,6 +64,7 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
 
     public Task<IPaginate<GetPartyPackagesResponse>> GetPartyPackages(GetPartyPackagesRequest request)
     {
+        if (request.Location is null) request.Location = "";
         try
         {
             var result = _unitOfWork.GetRepository<PartyPackage>().GetPagingListAsync<GetPartyPackagesResponse>(
@@ -90,9 +91,10 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     x.HostParty
                 ),
                 predicate: x =>
+                    (request.Status.ToLower().Equals("both") || request.Status.Equals(x.Status)) &&
                     (request.IsDeleted.ToLower().Equals("both") || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)) &&
                             (x.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
-                            && x.Name.Contains(request.SearchString ?? ""),
+                            && (x.Name.Contains(request.SearchString ?? "") && x.Location.Contains(request.Location)),
                             //&& x.Description.Contains(request.SearchString ?? "")
                             //&& x.Location.Contains(request.SearchString ?? "")
                             //&& x.StartTime.Contains(request.SearchString ?? "")
