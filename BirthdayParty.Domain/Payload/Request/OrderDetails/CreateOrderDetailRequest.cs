@@ -12,8 +12,10 @@ namespace BirthdayParty.Domain.Payload.Request.OrderDetails
         public string? CustomerId { get; set; }
 
         public string? ChildrenName { get; set; }
-        public string? ChildrenBirthday { get; set; }
+        public DateTime? ChildrenBirthday { get; set; }
         public int? NumberOfChildren { get; set; }
+        public string? Gender { get; set; }
+        public long? TotalPrice { get; set; }
         public DateTime? StartTime { get; set; }
 
         [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]

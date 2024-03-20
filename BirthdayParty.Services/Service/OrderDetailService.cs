@@ -16,12 +16,11 @@ namespace BirthdayParty.Services.Service
         {
         }
 
-        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(int page, int size)
+        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(GetOrderDetailsRequest request)
         {
             IPaginate<GetOrderDetailResponse> response
                 = await _unitOfWork.GetRepository<OrderDetail>()
                 .GetPagingListAsync(
-
                     selector: x => new GetOrderDetailResponse(
                         x.Id,
                         x.PartyPackageId,
@@ -38,9 +37,15 @@ namespace BirthdayParty.Services.Service
                         x.IsDeleted,
                         x.PartyPackage,
                         x.Customer,
-                        x.Gender),
-                    page: page,
-                    size: size,
+                        x.Gender,
+                        x.Status),
+                    predicate: x => (request.IsDeleted.ToLower().Equals("both")
+                            || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted))
+                            && (x.PartyPackage.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
+                            && x.CustomerId.Contains(request.CustomerId),
+                            //&& x.Date.Contains(request.SearchString ?? ""),
+                    page: request.Page,
+                    size: request.Size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
             return response;
         }
@@ -66,7 +71,8 @@ namespace BirthdayParty.Services.Service
                         x.IsDeleted,
                         x.PartyPackage,
                         x.Customer,
-                        x.Gender),
+                        x.Gender,
+                        x.Status),
                 predicate: x => x.Id.Equals(id));
 
             return response;
