@@ -8,8 +8,7 @@ namespace BirthdayParty.Domain.Payload.Response.Menus
 {
     public class GetMenuResponse
     {
-        public GetMenuResponse(string id, string? name, string? description
-            , DateTime? createdAt, DateTime? updatedAt, bool? isDeleted)
+        public GetMenuResponse(string id, string? name, string? description, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted)
         {
             Id = id;
             Name = name;
@@ -24,6 +23,7 @@ namespace BirthdayParty.Domain.Payload.Response.Menus
         public string? Name { get; set; }
 
         public string? Description { get; set; }
+
 
         public DateTime? CreatedAt { get; set; }
 

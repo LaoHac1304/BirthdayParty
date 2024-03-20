@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace BirthdayParty.Domain.Payload.Request.Menus
+namespace BirthdayParty.Domain.Payload.Request.Menu
 {
     public class CreateMenuRequest
     {

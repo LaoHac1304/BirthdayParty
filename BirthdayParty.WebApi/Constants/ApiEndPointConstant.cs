@@ -27,6 +27,7 @@
         {
             public const string OrderDetailsEndpoint = ApiEndpoint + "/orderdetails";
             public const string OrderDetailEndpoint = OrderDetailsEndpoint + "/{id}";
+            public const string OwnOrderDetailsEndpoint = ApiEndpoint + "/orderdetails/me";
         }
 
 
@@ -70,6 +71,7 @@
         {
             public const string MenusEndpoint = ApiEndpoint + "/menu";
             public const string MenuEndpoint = MenusEndpoint + "/{id}";
+            public const string MenuByPackageEndpoint = MenusEndpoint + "/{packageId}/package";
         }
 
         public static class Customer

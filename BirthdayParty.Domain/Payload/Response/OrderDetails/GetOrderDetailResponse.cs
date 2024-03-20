@@ -10,7 +10,7 @@ namespace BirthdayParty.Domain.Payload.Response.OrderDetails
         public GetOrderDetailResponse(string? id, string? partyPackageId, string? customerId
             , string? childrenName, string? childrenBirthday, int? numberOfChildren
             , long? totalPrice, string? startTime, string? endTime, DateTime? date, DateTime? createdAt, DateTime? updatedAt
-            , bool? isDeleted, PartyPackage? partyPackage, Customer? customer, string? gender)
+            , bool? isDeleted, PartyPackage? partyPackage, Customer? customer, string? gender, string? status)
         {
             Id = id;
             PartyPackageId = partyPackageId;
@@ -28,6 +28,7 @@ namespace BirthdayParty.Domain.Payload.Response.OrderDetails
             PartyPackage = partyPackage;
             Customer = customer;
             Gender = gender;
+            Status = status;
         }
 
         public string? Id { get; set; }
@@ -43,6 +44,7 @@ namespace BirthdayParty.Domain.Payload.Response.OrderDetails
 
         [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]
         public string? EndTime { get; set; }
+        public string? Status { get; set; } = "PENDING";
 
         public DateTime? Date { get; set; } = DateTime.UtcNow;
 

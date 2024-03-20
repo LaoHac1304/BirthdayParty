@@ -4,6 +4,11 @@ using BirthdayParty.WebApi.Constants;
 using BirthdayParty.Services.Service;
 using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Request.Accounts;
+using System.Security.Claims;
+using BirthdayParty.Application.Service.Common;
+using BirthdayParty.Domain.Payload.Response.Customers;
+using BirthdayParty.WebApi.Enums;
+using BirthdayParty.WebApi.Validators;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BirthdayParty.WebApi.Controllers
@@ -13,10 +18,15 @@ namespace BirthdayParty.WebApi.Controllers
     public class OrderDetailsController : ControllerBase
     {
         private readonly IOrderDetailsService orderDetailsService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomerService _customerService;
 
-        public OrderDetailsController(IOrderDetailsService orderDetailsService)
+        public OrderDetailsController(IOrderDetailsService orderDetailsService, IHttpContextAccessor httpContextAccessor, ICustomerService customerService)
         {
             this.orderDetailsService = orderDetailsService;
+            _httpContextAccessor = httpContextAccessor;
+            _customerService = customerService;
+
         }
 
         // GET: api/<OrderDetailsController>
@@ -33,6 +43,30 @@ namespace BirthdayParty.WebApi.Controllers
         {
             var orderDetail = await orderDetailsService.GetOrderDetailById(id);
             return Ok(orderDetail);
+        }
+
+        [HttpGet(ApiEndPointConstant.OrderDetail.OwnOrderDetailsEndpoint)]
+        [CustomAuthorize(RoleEnum.customer)]
+        public async Task<IActionResult> GetMyOrderDetail([FromQuery] int page, [FromQuery] int size)
+        {
+            var currentUser = _httpContextAccessor.HttpContext.User;
+            if (currentUser is null) return Unauthorized("Email Or Role Invalid!!!");
+
+            var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = currentUser.FindFirst(ClaimTypes.Email)?.Value;
+            var role = currentUser.FindFirst(ClaimTypes.Role)?.Value;
+            if (role is null || userId is null || email is null) return Unauthorized("Email Or Role Invalid!!!");
+            if (role.Equals("customer"))
+            {
+                GetCustomerResponse customerResponse = await _customerService.GetCustomerByAccountId(userId);
+                if (customerResponse is null)
+                    return Unauthorized();
+                var orderDetail = await orderDetailsService.GetOrderDetailsByCustomerId(customerResponse.Id, page, size);
+                return Ok(orderDetail);
+            }
+            else return Unauthorized();
+
+
         }
 
         // POST api/<OrderDetailsController>
@@ -54,6 +88,7 @@ namespace BirthdayParty.WebApi.Controllers
             }
             return Ok("Update Failed");
         }
+
 
     }
 }
