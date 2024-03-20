@@ -62,13 +62,13 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
         }
     }
 
-    public Task<IPaginate<GetPartyPackagesResponse>> GetPartyPackages(GetPartyPackagesRequest request)
+    public Task<IPaginate<GetPartyPackageResponse>> GetPartyPackages(GetPartyPackagesRequest request)
     {
         if (request.Location is null) request.Location = "";
         try
         {
-            var result = _unitOfWork.GetRepository<PartyPackage>().GetPagingListAsync<GetPartyPackagesResponse>(
-                selector: x => new GetPartyPackagesResponse
+            var result = _unitOfWork.GetRepository<PartyPackage>().GetPagingListAsync<GetPartyPackageResponse>(
+                selector: x => new GetPartyPackageResponse
                 (
                     x.Id,
                     x.HostPartyId,

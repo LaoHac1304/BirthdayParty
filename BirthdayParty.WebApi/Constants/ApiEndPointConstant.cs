@@ -79,5 +79,10 @@
             public const string CustomersEndpoint = ApiEndpoint + "/customers";
             public const string CustomerEndpoint = CustomersEndpoint + "/{id}";
         }
+        public static class RoomOnDuty
+        {
+            public const string RoomOnDutysEndpoint = ApiEndpoint + "/roomOnDutys";
+            public const string RoomOnDutyEndpoint = RoomOnDutysEndpoint + "/{id}";
+        }
     }
 }
