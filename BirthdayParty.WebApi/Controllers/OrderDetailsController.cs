@@ -85,7 +85,7 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
         // PUT api/<OrderDetailsController>/5
-        [HttpPut(ApiEndPointConstant.OrderDetail.OrderDetailEndpoint)]
+        [HttpDelete(ApiEndPointConstant.OrderDetail.OrderDetailEndpoint)]
         public async Task<IActionResult>  Put(string id)
         {
             bool isSuccessful = await orderDetailsService.UpdatedOrderDetailById(id);
@@ -95,6 +95,7 @@ namespace BirthdayParty.WebApi.Controllers
             }
             return Ok("Update Failed");
         }
+        
 
 
     }
