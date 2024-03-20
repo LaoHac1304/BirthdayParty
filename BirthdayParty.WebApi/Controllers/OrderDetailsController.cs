@@ -21,9 +21,9 @@ namespace BirthdayParty.WebApi.Controllers
 
         // GET: api/<OrderDetailsController>
         [HttpGet(ApiEndPointConstant.OrderDetail.OrderDetailsEndpoint)]
-        public async Task<IActionResult> GetOrderDetails([FromQuery]int page, [FromQuery]int size)
+        public async Task<IActionResult> GetOrderDetails([FromQuery] GetOrderDetailsRequest request)
         { 
-            var orderDetail = await orderDetailsService.GetOrderDetails(page, size);
+            var orderDetail = await orderDetailsService.GetOrderDetails(request);
             return Ok(orderDetail);
         }
 

@@ -6,7 +6,7 @@ namespace BirthdayParty.Application.Service
 {
     public interface IOrderDetailsService
     {
-        Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(int page, int size);
+        Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(GetOrderDetailsRequest request);
 
         Task<GetOrderDetailResponse> GetOrderDetailById(string id);
 

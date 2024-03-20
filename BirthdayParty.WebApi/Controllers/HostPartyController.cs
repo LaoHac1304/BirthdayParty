@@ -17,7 +17,7 @@ namespace BirthdayParty.WebApi.Controllers
             _hostPartyService = hostPartyService;
         }
 
-        [CustomAuthorize(RoleEnum.admin)]
+        //[CustomAuthorize(RoleEnum.admin)]
         [HttpGet(ApiEndPointConstant.HostParty.HostPartiesEndpoint)]
         public async Task<IActionResult> GetHostParties([FromQuery] int page, [FromQuery] int size)
         {

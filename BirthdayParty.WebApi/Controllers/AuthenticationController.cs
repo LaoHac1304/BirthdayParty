@@ -70,6 +70,13 @@ namespace BirthdayParty.WebApi.Controllers
                 GetHostPartyResponse hostResponse = await _hostPartyService.GetHostPartyByAccountId(userId);
                 return Ok(hostResponse);
             }
+            if (role.Equals("admin"))
+            {
+                return Ok(new
+                {
+                    id = userId
+                });
+            }
             return Unauthorized("Email Or Role Invalid!!!");
         }
     }
