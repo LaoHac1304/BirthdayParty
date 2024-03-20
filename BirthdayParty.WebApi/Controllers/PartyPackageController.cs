@@ -23,7 +23,7 @@ public class PartyPackageController : BaseController<PartyPackageController>
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IPaginate<GetPartyPackagesResponse>>> Get(
+    public async Task<ActionResult<IPaginate<GetPartyPackageResponse>>> Get(
         [FromQuery] GetPartyPackagesRequest request)
     {
         var result = await _partyPackageService.GetPartyPackages(request);
