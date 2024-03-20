@@ -3,6 +3,7 @@ using BirthdayParty.Application.Repository.Common;
 using BirthdayParty.Application.Service;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
+using BirthdayParty.Domain.Payload.Request;
 using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using Microsoft.AspNetCore.Http;
@@ -78,7 +79,7 @@ namespace BirthdayParty.Services.Service
             return response;
         }
 
-        public async Task<bool> UpdatedOrderDetailById(string id)
+        public async Task<bool> SoftDeleteOrderDetail(string id)
         {
             if (id == string.Empty) throw new BadHttpRequestException("Order Id is null or not exist");
 
@@ -130,5 +131,26 @@ namespace BirthdayParty.Services.Service
 
             return data;
         }
+
+        public async Task<bool> UpdateOrderDetail(string orderDetailId, UpdateOrderDetailRequest updateOrderDetailRequest)
+        {
+            try
+            {
+                var toBeUpdated = await _unitOfWork.GetRepository<OrderDetail>()
+                    .SingleOrDefaultAsync(predicate:x => x.Id.Equals(orderDetailId));
+                
+                if (toBeUpdated == null) throw new BadHttpRequestException("Order Detail was not found");
+                
+                toBeUpdated.Status = updateOrderDetailRequest.Status;
+                _unitOfWork.GetRepository<OrderDetail>().UpdateAsync(toBeUpdated);
+                var result = await _unitOfWork.CommitAsync();
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+    
     }
 }

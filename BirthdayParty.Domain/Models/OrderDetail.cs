@@ -1,5 +1,6 @@
 ﻿using BirthdayParty.Domain.Validation.OrderDetailValidation;
 using System.ComponentModel.DataAnnotations.Schema;
+using BirthdayParty.Domain.Constants;
 
 namespace BirthdayParty.Domain.Models;
 
@@ -26,7 +27,7 @@ public partial class OrderDetail
     public DateTime? UpdatedAt { get; set; }
 
     public bool? IsDeleted { get; set; }
-    public string? Status { get; set; } = "PENDING";
+    public string? Status { get; set; } = OrderDetailStatus.Pending; 
 
     [ForeignKey(nameof(PartyPackageId))]
     public virtual PartyPackage? PartyPackage { get; set; }
