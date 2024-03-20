@@ -7,6 +7,7 @@ using BirthdayParty.Domain.Payload.Request.Accounts;
 using System.Security.Claims;
 using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.Paginate;
+using BirthdayParty.Domain.Payload.Request;
 using BirthdayParty.Domain.Payload.Response.Customers;
 using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using BirthdayParty.WebApi.Enums;
@@ -84,11 +85,11 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(order);
         }
 
-        // PUT api/<OrderDetailsController>/5
+        // DELETE api/<OrderDetailsController>/5
         [HttpDelete(ApiEndPointConstant.OrderDetail.OrderDetailEndpoint)]
         public async Task<IActionResult>  Put(string id)
         {
-            bool isSuccessful = await orderDetailsService.UpdatedOrderDetailById(id);
+            bool isSuccessful = await orderDetailsService.SoftDeleteOrderDetail(id);
             if (isSuccessful)
             {
                 return Ok("Update  successful !");
@@ -96,6 +97,17 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok("Update Failed");
         }
         
+        // PUT api/<OrderDetailsController>/5
+        [HttpPut($"{ApiEndPointConstant.OrderDetail.OrderDetailEndpoint}")]
+        public async Task<IActionResult> Put([FromRoute]string id, [FromBody] UpdateOrderDetailRequest updateOrderDetailRequest)
+        {
+            bool isSuccessful = await orderDetailsService.UpdateOrderDetail(id,updateOrderDetailRequest);
+            if (isSuccessful)
+            {
+                return Ok("Update  successful !");
+            }
+            return Ok("Update Failed");
+        } 
 
 
     }
