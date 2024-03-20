@@ -11,7 +11,7 @@ public interface IPartyPackageService
 {
     public Task<string> CreatePost(string partyPackageId, CreatePostRequest request);
     public Task<IPaginate<GetPostsResponse>> GetPosts(string partyPackageId, GetPostsRequest request);
-    Task<IPaginate<GetPartyPackagesResponse>> GetPartyPackages(GetPartyPackagesRequest request);
+    Task<IPaginate<GetPartyPackageResponse>> GetPartyPackages(GetPartyPackagesRequest request);
     Task<string> CreatePartyPackage(CreatePartyPackageRequest request);
     Task<string> UpdatePartyPackage(string id, UpdatePartyPackageRequest request);
     Task<string> DeletePartyPackage(string id);

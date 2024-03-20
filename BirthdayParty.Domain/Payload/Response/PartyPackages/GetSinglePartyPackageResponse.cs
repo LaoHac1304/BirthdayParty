@@ -1,8 +1,4 @@
 ﻿using BirthdayParty.Domain.Models;
-
-using BirthdayParty.Domain.Payload.Response.HostParties;
-
-
 namespace BirthdayParty.Domain.Payload.Response.PartyPackages;
 
 public class GetSinglePartyPackageResponse

@@ -2,9 +2,9 @@
 
 namespace BirthdayParty.Domain.Payload.Response.PartyPackages;
 
-public class GetPartyPackagesResponse
+public class GetPartyPackageResponse
 {
-    public GetPartyPackagesResponse(string id, string? hostPartyId, string? discountId, string? name, string? description, string? location, int roomSeats, string? roomUrl, string? imageUrl, int? packagePrice, int? seatPrice, string? startTime, string? endTime, string? status, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, Discount? discount, HostParty? hostParty)
+    public GetPartyPackageResponse(string id, string? hostPartyId, string? discountId, string? name, string? description, string? location, int roomSeats, string? roomUrl, string? imageUrl, int? packagePrice, int? seatPrice, string? startTime, string? endTime, string? status, DateTime? createdAt, DateTime? updatedAt, bool? isDeleted, Discount? discount, HostParty? hostParty)
     {
         Id = id;
         HostPartyId = hostPartyId;
