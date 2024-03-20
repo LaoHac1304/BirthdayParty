@@ -28,12 +28,13 @@ public class RoomOnDutyService : BaseService<RoomOnDutyService>, IRoomOnDutyServ
         _postService = postService;
     }
 
-    public Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetRoomOnDutysRequest request)
+    public async Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetRoomOnDutysRequest request)
     {
         try
         {
-            var result = _unitOfWork.GetRepository<RoomOnDuty>().GetPagingListAsync< GetRoomOnDutysResponse > (
-                selector: x => new GetRoomOnDutysResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.CreatedAt, x.UpdatedAt),
+            var result = 
+                await _unitOfWork.GetRepository<RoomOnDuty>().GetPagingListAsync< GetRoomOnDutysResponse > (
+                selector: x => new GetRoomOnDutysResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.CreatedAt, x.UpdateAt),
                 //predicate: x =>
                 //    (request.Status.ToLower().Equals("both") || Boolean.Parse(request.Status).Equals(x.Status)) &&
                 //            (x.PartyPackage.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId)),
@@ -55,7 +56,7 @@ public class RoomOnDutyService : BaseService<RoomOnDutyService>, IRoomOnDutyServ
         try
         {
             GetSingleRoomOnDutyResponse roomOnDutyResponse = await _unitOfWork.GetRepository<RoomOnDuty>().SingleOrDefaultAsync(
-               selector: x => new GetSingleRoomOnDutyResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.PartyPackage, x.CreatedAt, x.UpdatedAt),
+               selector: x => new GetSingleRoomOnDutyResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.PartyPackage, x.CreatedAt, x.UpdateAt),
                predicate: x => x.Id.Equals(id));
 
             return roomOnDutyResponse;
