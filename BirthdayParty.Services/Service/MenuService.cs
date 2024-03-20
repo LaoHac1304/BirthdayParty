@@ -90,7 +90,6 @@ namespace BirthdayParty.Services.Service
 
             _unitOfWork.GetRepository<Menu>().UpdateAsync(menu);
             menu.Name = request.Name;
-            menu.Price = request.Price;
             menu.Description = request.Description;
             menu.UpdatedAt = DateTime.UtcNow;
             bool isSuccessful = await _unitOfWork.CommitAsync() > 0;
