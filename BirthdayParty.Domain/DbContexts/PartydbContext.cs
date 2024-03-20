@@ -41,11 +41,11 @@ public partial class PartydbContext : DbContext
     public virtual DbSet<Post> Posts { get; set; }
 
     public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //optionsBuilder.UseMySQL("server=database-1.c7cae8e8mcxf.ap-southeast-2.rds.amazonaws.com;uid=admin;pwd=7LwPyzbw4KfMBu6;database=partydb");
         optionsBuilder.UseMySQL(GetConnectionString());
-
     }
 
     private string GetConnectionString()
@@ -58,7 +58,6 @@ public partial class PartydbContext : DbContext
         return strConn;
     }
 
-    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -400,8 +399,8 @@ public partial class PartydbContext : DbContext
                 .HasMaxLength(64)
                 .HasColumnName("id");
             //entity.Property(e => e.AvailableDates)
-                //.HasMaxLength(6)
-                //.HasColumnName("available_dates");
+            //.HasMaxLength(6)
+            //.HasColumnName("available_dates");
             //entity.Property(e => e.AvailableForPreorder).HasColumnName("available_for_preorder");
             entity.Property(e => e.CreatedAt)
                 .HasMaxLength(6)
@@ -462,6 +461,9 @@ public partial class PartydbContext : DbContext
             entity.ToTable("room_on_duty");
 
             entity.HasIndex(e => e.PartyPackageId, "FK__room_on_duty__pack");
+            entity.Property(e => e.PartyPackageId).HasColumnName("party_package_id");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
 
             entity.Property(e => e.Id)
                 .HasMaxLength(64)
@@ -476,14 +478,13 @@ public partial class PartydbContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .HasColumnName("status");
-            entity.Property(e => e.UpdatedAt)
+            entity.Property(e => e.UpdateAt)
                 .HasMaxLength(6)
-                .HasColumnName("updated_at");
+                .HasColumnName("update_at");
 
             entity.HasOne(p => p.PartyPackage).WithMany(r => r.RoomOnDuties)
                 .HasForeignKey(p => p.PartyPackageId)
                 .HasConstraintName("FK__room_on_duty__pack");
-
         });
 
         modelBuilder.Entity<PaymentDetail>(entity =>

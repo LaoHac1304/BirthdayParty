@@ -11,6 +11,6 @@ namespace BirthdayParty.Domain.Models
         public string? Status { get; set; } // processing || complete
         public virtual PartyPackage? PartyPackage { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
     }
 }
