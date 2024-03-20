@@ -61,7 +61,12 @@ namespace BirthdayParty.WebApi.Controllers
                 GetCustomerResponse customerResponse = await _customerService.GetCustomerByAccountId(userId);
                 if (customerResponse is null)
                     return Unauthorized();
-                var orderDetail = await orderDetailsService.GetOrderDetailsByCustomerId(customerResponse.Id, page, size);
+                //var orderDetail = await orderDetailsService.GetOrderDetailsByCustomerId(customerResponse.Id, page, size);
+                var orderDetail = await orderDetailsService.GetOrderDetails(new GetOrderDetailsRequest { 
+                    CustomerId = customerResponse.Id,
+                    Page = page,
+                    Size = size,
+                });
                 return Ok(orderDetail);
             }
             else return Unauthorized();

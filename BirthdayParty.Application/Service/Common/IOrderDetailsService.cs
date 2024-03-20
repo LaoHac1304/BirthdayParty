@@ -14,6 +14,6 @@ namespace BirthdayParty.Application.Service
         Task<bool> UpdatedOrderDetailById(string id);
 
         Task<GetOrderDetailResponse> CreateOrderDetail(CreateOrderDetailRequest createOrderDetailRequest);
-        Task<IPaginate<GetOrderDetailResponse>> GetOrderDetailsByCustomerId(string id, int page, int size);
+        //Task<IPaginate<GetOrderDetailResponse>> GetOrderDetailsByCustomerId(string id, int page, int size);
     }
 }
