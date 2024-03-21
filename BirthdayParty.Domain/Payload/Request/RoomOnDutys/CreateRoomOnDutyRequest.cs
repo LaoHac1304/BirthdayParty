@@ -17,7 +17,7 @@ public class CreateRoomOnDutyRequest : IValidatableObject
 
        if (StartDate < DateTime.Now)
        {
-           yield return new ValidationResult("Start date must be greater than current date", new[] { nameof(StartDate) });
+           yield return new ValidationResult("Start date must not be in the past", new[] { nameof(StartDate) });
            
        }
     }

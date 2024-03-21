@@ -13,7 +13,7 @@ namespace BirthdayParty.Domain.Payload.Request.OrderDetails
 
         public string? ChildrenName { get; set; }
         public DateTime? ChildrenBirthday { get; set; }
-        [Range(0,10,ErrorMessage = "Number of children must be between 0 and 10")]
+        // [Range(0,10,ErrorMessage = "Number of children must be between 0 and 10")]
         public int? NumberOfChildren { get; set; }
         
         public string? Gender { get; set; }
@@ -27,7 +27,12 @@ namespace BirthdayParty.Domain.Payload.Request.OrderDetails
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if(StartTime < DateTime.Now)
-                yield return new ValidationResult("Start date must be in the future.");
+                yield return new ValidationResult("Start date must not be in the past .", new[] { nameof(StartTime) });
+
+            if (StartTime > EndTime)
+            {
+                yield return new ValidationResult("End date must be after start date.", new[] { nameof(EndTime) });
+            }
         }
     }
 }
