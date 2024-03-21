@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BirthdayParty.Domain.Payload.Request.OrderDetails
 {
-    public class CreateOrderDetailRequest
+    public class CreateOrderDetailRequest : IValidatableObject
     {
         [Required]
         public string? PartyPackageId { get; set; }
@@ -23,5 +23,11 @@ namespace BirthdayParty.Domain.Payload.Request.OrderDetails
 
         [OrderDetailDate(nameof(StartTime), "End date must be after start date.")]
         public DateTime? EndTime { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(StartTime < DateTime.Now)
+                yield return new ValidationResult("Start date must be in the future.");
+        }
     }
 }
