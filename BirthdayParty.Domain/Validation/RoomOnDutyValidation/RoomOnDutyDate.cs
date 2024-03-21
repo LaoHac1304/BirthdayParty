@@ -8,11 +8,11 @@ public class RoomOnDutyDate : ValidationAttribute
 
    public RoomOnDutyDate(string startDate, string errorMessage)
    {
-      if (!DateTime.TryParse(startDate, out _startDate))
+      /*if (!DateTime.TryParse(startDate, out _startDate))
       {
          throw new ArgumentException("Invalid date format", nameof(startDate));
       }
-      ErrorMessage = errorMessage;
+      ErrorMessage = errorMessage;*/
    }
 
    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
