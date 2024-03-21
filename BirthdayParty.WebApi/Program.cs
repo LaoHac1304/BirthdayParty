@@ -1,4 +1,5 @@
 using BirthdayParty.Domain.DbContexts;
+using BirthdayParty.Services.Constants;
 using BirthdayParty.Services.Extensions;
 using BirthdayParty.WebApi.Constants;
 using BirthdayParty.WebApi.Converter;
@@ -53,6 +54,7 @@ try
              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
          };
      });
+    builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     //Jwt configuration ends here
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
