@@ -35,9 +35,7 @@ public class RoomOnDutyService : BaseService<RoomOnDutyService>, IRoomOnDutyServ
             var result = 
                 await _unitOfWork.GetRepository<RoomOnDuty>().GetPagingListAsync< GetRoomOnDutysResponse > (
                 selector: x => new GetRoomOnDutysResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.CreatedAt, x.UpdateAt),
-                //predicate: x =>
-                //    (request.Status.ToLower().Equals("both") || Boolean.Parse(request.Status).Equals(x.Status)) &&
-                //            (x.PartyPackage.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId)),
+                predicate: x => x.PartyPackageId == request.PartyPackageId,
                 orderBy: x => x.OrderBy(partyPackage => partyPackage.CreatedAt),
                 page: request.Page,
                 size: request.Size);

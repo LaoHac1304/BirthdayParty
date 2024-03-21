@@ -31,7 +31,7 @@ public class RoomOnDutyController : BaseController<RoomOnDutyController>
         return Ok(result);
     }
 
-    [HttpPost(ApiEndPointConstant.RoomOnDuty.RoomOnDutyEndpoint)]
+    [HttpPost]
     public async Task<ActionResult<string>> Post([FromBody] CreateRoomOnDutyRequest request)
     {
         string result = await _roomOnDutyService.CreateRoomOnDuty(request);
