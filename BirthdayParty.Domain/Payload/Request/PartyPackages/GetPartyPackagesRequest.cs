@@ -1,4 +1,6 @@
-﻿namespace BirthdayParty.Domain.Payload.Request.PartyPackages;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BirthdayParty.Domain.Payload.Request.PartyPackages;
 
 public class GetPartyPackagesRequest
 {
@@ -7,6 +9,7 @@ public class GetPartyPackagesRequest
     public string? HostPartyId { get; set; } = "";
     public string? Location { get; set; } = "";
     public string? Status { get; set; } = "both";
+    [Range(0, int.MaxValue, ErrorMessage = "Page must be a positive number")]
     public int Page { get; set; }
     public int Size { get; set; }
 }
