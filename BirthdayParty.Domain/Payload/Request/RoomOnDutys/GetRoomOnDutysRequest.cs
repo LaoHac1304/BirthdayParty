@@ -11,4 +11,6 @@ public class GetMenuRequest
     public int Page { get; set; }
     [Range(0, int.MaxValue, ErrorMessage = "Size must be greater than or equal to 0")]
     public int Size { get; set; }
+
+    public string? PartyPackageId { get; set; }
 }
