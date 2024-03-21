@@ -91,9 +91,9 @@ public class PartyPackageService : BaseService<PartyPackageService>, IPartyPacka
                     x.HostParty
                 ),
                 predicate: x =>
-                    (request.Status.ToLower().Equals("both") || request.Status.Equals(x.Status)) &&
-                    (request.IsDeleted.ToLower().Equals("both") || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)) &&
-                            (x.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
+                    //(request.Status.ToLower().Equals("both") || request.Status.Equals(x.Status)) &&
+                    //(request.IsDeleted.ToLower().Equals("both") || Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted)) &&
+                            (x.HostPartyId.Contains(request.HostPartyId))
                             && (x.Name.Contains(request.SearchString ?? "") && x.Location.Contains(request.Location)),
                             //&& x.Description.Contains(request.SearchString ?? "")
                             //&& x.Location.Contains(request.SearchString ?? "")

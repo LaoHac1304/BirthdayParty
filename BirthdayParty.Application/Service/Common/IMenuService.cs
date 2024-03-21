@@ -13,7 +13,7 @@ namespace BirthdayParty.Application.Service.Common
 {
     public interface IMenuService
     {
-        Task<IPaginate<GetMenuResponse>> GetMenus(int page, int size);
+        Task<IPaginate<GetMenuResponse>> GetMenus(GetMenuRequest request);
 
         Task<GetMenuResponse> GetMenuById(string id);
         Task<bool> RemoveMenu(string id);

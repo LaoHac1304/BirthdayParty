@@ -41,9 +41,9 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
         [HttpGet(ApiEndPointConstant.Menu.MenusEndpoint)]
-        public async Task<IActionResult> GetDiscounts([FromQuery] int page, [FromQuery] int size)
+        public async Task<IActionResult> GetMenus([FromQuery] GetMenuRequest request)
         {
-            var menu = await menuService.GetMenus(page, size);
+            var menu = await menuService.GetMenus(request);
             return Ok(menu);
         }
 

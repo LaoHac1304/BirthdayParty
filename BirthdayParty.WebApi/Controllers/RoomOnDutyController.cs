@@ -25,7 +25,7 @@ public class RoomOnDutyController : BaseController<RoomOnDutyController>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IPaginate<GetRoomOnDutysResponse>>> Get(
-        [FromQuery] GetRoomOnDutysRequest request)
+        [FromQuery] GetMenuRequest request)
     {
         var result = await _roomOnDutyService.GetRoomOnDutys(request);
         return Ok(result);
