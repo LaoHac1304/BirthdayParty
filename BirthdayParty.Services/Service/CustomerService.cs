@@ -4,16 +4,9 @@ using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.Customers;
-using BirthdayParty.Domain.Payload.Request.HostParties;
 using BirthdayParty.Domain.Payload.Response.Customers;
-using BirthdayParty.Domain.Payload.Response.HostParties;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BirthdayParty.Services.Service
 {
@@ -22,7 +15,7 @@ namespace BirthdayParty.Services.Service
         public CustomerService(IUnitOfWork unitOfWork
             , ILogger<CustomerService> logger
             , IMapper mapper
-            , IHttpContextAccessor httpContextAccessor) 
+            , IHttpContextAccessor httpContextAccessor)
             : base(unitOfWork, logger, mapper, httpContextAccessor)
         {
         }
@@ -48,6 +41,19 @@ namespace BirthdayParty.Services.Service
                     selector: x => new GetCustomerResponse(x.Id, x.FullName, x.DayOfBirth
                     , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email, x.ImageUrl),
                     predicate: x => x.Id.Equals(id)
+                 );
+            if (CustomerResponse == null) throw new BadHttpRequestException("customer is not found");
+            return CustomerResponse;
+        }
+
+        public async Task<GetCustomerResponse> GetCustomerByUserId(string userId)
+        {
+            GetCustomerResponse CustomerResponse = await _unitOfWork
+                .GetRepository<Customer>()
+                .SingleOrDefaultAsync(
+                    selector: x => new GetCustomerResponse(x.Id, x.FullName, x.DayOfBirth
+                    , x.CreatedAt, x.UpdatedAt, x.IsDeleted, x.PhoneNumber, x.User!.Email, x.ImageUrl),
+                    predicate: x => x.UserId.Equals(userId)
                  );
             if (CustomerResponse == null) throw new BadHttpRequestException("customer is not found");
             return CustomerResponse;

@@ -78,6 +78,7 @@
         {
             public const string CustomersEndpoint = ApiEndpoint + "/customers";
             public const string CustomerEndpoint = CustomersEndpoint + "/{id}";
+            public const string CustomerByUserIdEndpoint = CustomersEndpoint + "/{userId}/user";
         }
     }
 }
