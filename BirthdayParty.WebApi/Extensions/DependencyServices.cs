@@ -36,6 +36,7 @@ public static class DependencyServices
         services.AddScoped<IHostPartyService, HostPartyService>();
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IUploadFileService, UploadFileService>();
+        services.AddScoped<IEmailService, EmailService>();
         return services;
     }
 
