@@ -80,5 +80,10 @@
             public const string CustomerEndpoint = CustomersEndpoint + "/{id}";
             public const string CustomerByUserIdEndpoint = CustomersEndpoint + "/{userId}/user";
         }
+        public static class RoomOnDuty
+        {
+            public const string RoomOnDutysEndpoint = ApiEndpoint + "/roomOnDutys";
+            public const string RoomOnDutyEndpoint = RoomOnDutysEndpoint + "/{id}";
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BirthdayParty.Application.Repository.Common;
 using BirthdayParty.Application.Service;
-using BirthdayParty.Domain.DbContexts;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
 using BirthdayParty.Domain.Payload.Request.Accounts;
@@ -10,11 +9,6 @@ using BirthdayParty.Domain.Payload.Response;
 using BirthdayParty.Domain.Payload.Response.Accounts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BirthdayParty.Services.Service
 {

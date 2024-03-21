@@ -8,9 +8,9 @@ namespace BirthdayParty.Domain.Models
         public string? PartyPackageId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string? Status { get; set; }
+        public string? Status { get; set; } // processing || complete
         public virtual PartyPackage? PartyPackage { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
     }
 }

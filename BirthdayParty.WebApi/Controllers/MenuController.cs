@@ -1,6 +1,6 @@
 ﻿using BirthdayParty.Application.Service.Common;
 using BirthdayParty.Domain.Payload.Request.Discounts;
-using BirthdayParty.Domain.Payload.Request.Menus;
+using BirthdayParty.Domain.Payload.Request.Menu;
 using BirthdayParty.Services.Service;
 using BirthdayParty.WebApi.Constants;
 using Microsoft.AspNetCore.Http;
@@ -41,16 +41,16 @@ namespace BirthdayParty.WebApi.Controllers
         }
 
         [HttpGet(ApiEndPointConstant.Menu.MenusEndpoint)]
-        public async Task<IActionResult> GetDiscounts([FromQuery] int page, [FromQuery] int size)
+        public async Task<IActionResult> GetMenus([FromQuery] GetMenuRequest request)
         {
-            var menu = await menuService.GetMenus(page, size);
+            var menu = await menuService.GetMenus(request);
             return Ok(menu);
         }
 
         [HttpPut(ApiEndPointConstant.Menu.MenuEndpoint)]
-        public async Task<IActionResult> Put(string id)
+        public async Task<IActionResult> Put(string id, [FromBody] UpdateMenuRequest request)
         {
-            bool isSuccessful = await menuService.UpdateMenuById(id);
+            bool isSuccessful = await menuService.UpdateMenuById(id, request);
             if (isSuccessful)
             {
                 return Ok("Update  successful !");
@@ -67,7 +67,7 @@ namespace BirthdayParty.WebApi.Controllers
                     return BadRequest("Menu Id is null or empty");
                 }
 
-                bool isDeleted = await menuService.UpdateMenuById(id);
+                bool isDeleted = await menuService.RemoveMenu(id);
 
                 if (isDeleted)
                 {

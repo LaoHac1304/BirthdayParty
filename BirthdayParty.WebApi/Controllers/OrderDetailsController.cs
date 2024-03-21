@@ -6,7 +6,10 @@ using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Request.Accounts;
 using System.Security.Claims;
 using BirthdayParty.Application.Service.Common;
+using BirthdayParty.Domain.Paginate;
+using BirthdayParty.Domain.Payload.Request;
 using BirthdayParty.Domain.Payload.Response.Customers;
+using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using BirthdayParty.WebApi.Enums;
 using BirthdayParty.WebApi.Validators;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,9 +34,9 @@ namespace BirthdayParty.WebApi.Controllers
 
         // GET: api/<OrderDetailsController>
         [HttpGet(ApiEndPointConstant.OrderDetail.OrderDetailsEndpoint)]
-        public async Task<IActionResult> GetOrderDetails([FromQuery]int page, [FromQuery]int size)
+        public async Task<ActionResult<IPaginate<GetOrderDetailResponse>>> GetOrderDetails([FromQuery] GetOrderDetailsRequest request)
         { 
-            var orderDetail = await orderDetailsService.GetOrderDetails(page, size);
+            var orderDetail = await orderDetailsService.GetOrderDetails(request);
             return Ok(orderDetail);
         }
 
@@ -61,7 +64,12 @@ namespace BirthdayParty.WebApi.Controllers
                 GetCustomerResponse customerResponse = await _customerService.GetCustomerByAccountId(userId);
                 if (customerResponse is null)
                     return Unauthorized();
-                var orderDetail = await orderDetailsService.GetOrderDetailsByCustomerId(customerResponse.Id, page, size);
+                //var orderDetail = await orderDetailsService.GetOrderDetailsByCustomerId(customerResponse.Id, page, size);
+                var orderDetail = await orderDetailsService.GetOrderDetails(new GetOrderDetailsRequest { 
+                    CustomerId = customerResponse.Id,
+                    Page = page,
+                    Size = size,
+                });
                 return Ok(orderDetail);
             }
             else return Unauthorized();
@@ -77,17 +85,29 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(order);
         }
 
-        // PUT api/<OrderDetailsController>/5
-        [HttpPut(ApiEndPointConstant.OrderDetail.OrderDetailEndpoint)]
+        // DELETE api/<OrderDetailsController>/5
+        [HttpDelete(ApiEndPointConstant.OrderDetail.OrderDetailEndpoint)]
         public async Task<IActionResult>  Put(string id)
         {
-            bool isSuccessful = await orderDetailsService.UpdatedOrderDetailById(id);
+            bool isSuccessful = await orderDetailsService.SoftDeleteOrderDetail(id);
             if (isSuccessful)
             {
                 return Ok("Update  successful !");
             }
             return Ok("Update Failed");
         }
+        
+        // PUT api/<OrderDetailsController>/5
+        [HttpPut($"{ApiEndPointConstant.OrderDetail.OrderDetailEndpoint}")]
+        public async Task<IActionResult> Put([FromRoute]string id, [FromBody] UpdateOrderDetailRequest updateOrderDetailRequest)
+        {
+            bool isSuccessful = await orderDetailsService.UpdateOrderDetail(id,updateOrderDetailRequest);
+            if (isSuccessful)
+            {
+                return Ok("Update  successful !");
+            }
+            return Ok("Update Failed");
+        } 
 
 
     }

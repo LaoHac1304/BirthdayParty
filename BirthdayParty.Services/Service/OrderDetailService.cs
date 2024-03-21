@@ -3,6 +3,7 @@ using BirthdayParty.Application.Repository.Common;
 using BirthdayParty.Application.Service;
 using BirthdayParty.Domain.Models;
 using BirthdayParty.Domain.Paginate;
+using BirthdayParty.Domain.Payload.Request;
 using BirthdayParty.Domain.Payload.Request.OrderDetails;
 using BirthdayParty.Domain.Payload.Response.OrderDetails;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +17,11 @@ namespace BirthdayParty.Services.Service
         {
         }
 
-        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(int page, int size)
+        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetails(GetOrderDetailsRequest request)
         {
             IPaginate<GetOrderDetailResponse> response
                 = await _unitOfWork.GetRepository<OrderDetail>()
                 .GetPagingListAsync(
-
                     selector: x => new GetOrderDetailResponse(
                         x.Id,
                         x.PartyPackageId,
@@ -40,8 +40,13 @@ namespace BirthdayParty.Services.Service
                         x.Customer,
                         x.Gender,
                         x.Status),
-                    page: page,
-                    size: size,
+                    predicate: x => x.PartyPackage.HostPartyId.Contains(request.HostPartyId) && x.CustomerId.Contains(request.CustomerId),
+                            //|| Boolean.Parse(request.IsDeleted).Equals(x.IsDeleted))
+                            //&& (x.PartyPackage.HostPartyId.Contains(request.HostPartyId) || string.IsNullOrEmpty(request.HostPartyId))
+                            //&& x.CustomerId.Contains(request.CustomerId),
+                            //&& x.Date.Contains(request.SearchString ?? ""),
+                    page: request.Page,
+                    size: request.Size,
                     orderBy: x => x.OrderBy(x => x.CreatedAt));
             return response;
         }
@@ -67,14 +72,14 @@ namespace BirthdayParty.Services.Service
                         x.IsDeleted,
                         x.PartyPackage,
                         x.Customer,
-                        x.Gender, 
+                        x.Gender,
                         x.Status),
                 predicate: x => x.Id.Equals(id));
 
             return response;
         }
 
-        public async Task<bool> UpdatedOrderDetailById(string id)
+        public async Task<bool> SoftDeleteOrderDetail(string id)
         {
             if (id == string.Empty) throw new BadHttpRequestException("Order Id is null or not exist");
 
@@ -127,35 +132,25 @@ namespace BirthdayParty.Services.Service
             return data;
         }
 
-        public async Task<IPaginate<GetOrderDetailResponse>> GetOrderDetailsByCustomerId(string id, int page, int size)
+        public async Task<bool> UpdateOrderDetail(string orderDetailId, UpdateOrderDetailRequest updateOrderDetailRequest)
         {
-            IPaginate<GetOrderDetailResponse> response
-                = await _unitOfWork.GetRepository<OrderDetail>()
-                .GetPagingListAsync(
-
-                    selector: x => new GetOrderDetailResponse(
-                        x.Id,
-                        x.PartyPackageId,
-                        x.CustomerId,
-                        x.ChildrenName,
-                        x.ChildrenBirthday,
-                        x.NumberOfChildren,
-                        x.TotalPrice,
-                        x.StartTime,
-                        x.EndTime,
-                        x.Date,
-                        x.CreatedAt,
-                        x.UpdatedAt,
-                        x.IsDeleted,
-                        x.PartyPackage,
-                        x.Customer,
-                        x.Gender,
-                        x.Status),
-                    page: page,
-                    size: size,
-                    predicate: x => x.CustomerId.Equals(id),
-                    orderBy: x => x.OrderBy(x => x.CreatedAt)) ;
-            return response;
+            try
+            {
+                var toBeUpdated = await _unitOfWork.GetRepository<OrderDetail>()
+                    .SingleOrDefaultAsync(predicate:x => x.Id.Equals(orderDetailId));
+                
+                if (toBeUpdated == null) throw new BadHttpRequestException("Order Detail was not found");
+                
+                toBeUpdated.Status = updateOrderDetailRequest.Status;
+                _unitOfWork.GetRepository<OrderDetail>().UpdateAsync(toBeUpdated);
+                var result = await _unitOfWork.CommitAsync();
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
+    
     }
 }
