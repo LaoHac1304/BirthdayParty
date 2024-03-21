@@ -25,7 +25,8 @@ namespace BirthdayParty.Domain.Payload.Request.OrderItems
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Date < DateTime.Now)
-                yield return new ValidationResult("Date must be in the future");
+                yield return new ValidationResult("Date must not be in the past",
+                    new[] { nameof(Date) });
         }
     }
 }
