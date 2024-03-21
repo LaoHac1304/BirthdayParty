@@ -33,6 +33,14 @@ namespace BirthdayParty.WebApi.Controllers
             return Ok(Customer);
         }
 
+
+        [HttpGet(ApiEndPointConstant.Customer.CustomerByUserIdEndpoint)]
+        public async Task<IActionResult> GetCustomerByUserId(string userId)
+        {
+            var Customer = await _CustomerService.GetCustomerByUserId(userId);
+            return Ok(Customer);
+        }
+
         /*[HttpPost(ApiEndPointConstant.Customer.CustomersEndpoint)]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest createCustomerRequest)
         {

@@ -16,5 +16,6 @@ namespace BirthdayParty.Application.Service.Common
         Task<IPaginate<GetCustomerResponse>> GetCustomers(int page, int size);
         Task<bool> UpdateCustomerById(string id, UpdateCustomerRequest updateCustomerRequest);
         Task<GetCustomerResponse> GetCustomerByAccountId(string accountId);
+        Task<GetCustomerResponse> GetCustomerByUserId(string userId);
     }
 }

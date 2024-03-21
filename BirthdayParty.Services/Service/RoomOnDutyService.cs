@@ -28,14 +28,14 @@ public class RoomOnDutyService : BaseService<RoomOnDutyService>, IRoomOnDutyServ
         _postService = postService;
     }
 
-    public async Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetMenuRequest request)
+    public async Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetRoomOnDutysRequest request)
     {
         try
         {
             var result = 
                 await _unitOfWork.GetRepository<RoomOnDuty>().GetPagingListAsync< GetRoomOnDutysResponse > (
                 selector: x => new GetRoomOnDutysResponse(x.Id, x.PartyPackageId, x.StartDate, x.EndDate, x.Status, x.CreatedAt, x.UpdateAt),
-                predicate: x => x.PartyPackageId == request.PartyPackageId,
+                predicate: x => x.PartyPackageId.Equals(request.PartyPackageId) && x.Status.Contains(request.Status ?? ""),
                 orderBy: x => x.OrderBy(partyPackage => partyPackage.CreatedAt),
                 page: request.Page,
                 size: request.Size);

@@ -6,7 +6,7 @@ namespace BirthdayParty.Application.Service.Common;
 
 public interface IRoomOnDutyService
 {
-    Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetMenuRequest request);
+    Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetRoomOnDutysRequest request);
     Task<GetSingleRoomOnDutyResponse> GetRoomOnDutyById(string id);
     Task<string> CreateRoomOnDuty(CreateRoomOnDutyRequest request);
     Task<string> UpdateRoomOnDuty(string id, UpdateRoomOnDutyRequest request);
