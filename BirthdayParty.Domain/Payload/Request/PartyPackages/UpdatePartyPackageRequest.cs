@@ -1,6 +1,8 @@
-﻿namespace BirthdayParty.Domain.Payload.Request.PartyPackages;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class UpdatePartyPackageRequest
+namespace BirthdayParty.Domain.Payload.Request.PartyPackages;
+
+public class UpdatePartyPackageRequest : IValidatableObject
 {
 
     public string? DiscountId { get; set; }
@@ -19,4 +21,12 @@ public class UpdatePartyPackageRequest
 
     public string? EndTime { get; set; }
     public string? Status { get; set; }
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (DateTime.Parse(StartTime) > DateTime.Parse(EndTime)) 
+            yield return new ValidationResult("Start time must be before end time");
+        
+        if(DateTime.Parse(StartTime) < DateTime.Now)
+            yield return new ValidationResult("Start time must be in the future");
+    }
 }
