@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Payload\Request\Discounts\" />
     <Folder Include="Payload\Request\Menus\" />
+    <Folder Include="Validation\RoomOnDutyValidation\" />
   </ItemGroup>
 
 </Project>
