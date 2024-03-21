@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using BirthdayParty.Domain.Validation.RoomOnDutyValidation;
 
 namespace BirthdayParty.Domain.Payload.Request.RoomOnDutys;
 
