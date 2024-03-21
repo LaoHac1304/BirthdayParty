@@ -28,7 +28,7 @@ public class RoomOnDutyService : BaseService<RoomOnDutyService>, IRoomOnDutyServ
         _postService = postService;
     }
 
-    public async Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetRoomOnDutysRequest request)
+    public async Task<IPaginate<GetRoomOnDutysResponse>> GetRoomOnDutys(GetMenuRequest request)
     {
         try
         {
