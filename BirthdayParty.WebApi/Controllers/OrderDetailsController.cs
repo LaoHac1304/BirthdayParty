@@ -23,13 +23,15 @@ namespace BirthdayParty.WebApi.Controllers
         private readonly IOrderDetailsService orderDetailsService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICustomerService _customerService;
+        private readonly IEmailService _emailService;
 
-        public OrderDetailsController(IOrderDetailsService orderDetailsService, IHttpContextAccessor httpContextAccessor, ICustomerService customerService)
+        public OrderDetailsController(IOrderDetailsService orderDetailsService, 
+            IHttpContextAccessor httpContextAccessor, ICustomerService customerService, IEmailService emailService)
         {
             this.orderDetailsService = orderDetailsService;
             _httpContextAccessor = httpContextAccessor;
             _customerService = customerService;
-
+            _emailService = emailService;
         }
 
         // GET: api/<OrderDetailsController>
@@ -104,6 +106,10 @@ namespace BirthdayParty.WebApi.Controllers
             bool isSuccessful = await orderDetailsService.UpdateOrderDetail(id,updateOrderDetailRequest);
             if (isSuccessful)
             {
+                if (updateOrderDetailRequest.Status.Equals("approved")) ;
+                {
+                    await _emailService.SendEmailAsync(id);
+                }
                 return Ok("Update  successful !");
             }
             return Ok("Update Failed");
